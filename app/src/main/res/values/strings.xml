@@ -22,4 +22,14 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
 
+    <string-array name="timer_units">
+        <item>Hours</item>
+        <item>Minutes</item>
+        <item>Seconds</item>
+    </string-array>
+
+    <string-array name="timer_set_add">
+        <item>Set</item>
+        <item>Add</item>
+    </string-array>
 </resources>

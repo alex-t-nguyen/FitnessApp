@@ -60,8 +60,12 @@ public class workouts extends AppCompatActivity {
     private EditText itemTitle;
 
     private Spinner spinner;
+    private Spinner spinnerItems;
     private String chosenCategory;
+    private String chosenItem;
     private boolean categorySelected;
+    private boolean itemSelected;
+    List<String> tempHeaderListItems;
 
     // Firebase Database variables
     private FirebaseDatabase database;
@@ -204,6 +208,16 @@ public class workouts extends AppCompatActivity {
                         ShowPopupItem(item);
                         break;
                     }
+                    case R.id.deleteCategory:
+                    {
+                        ShowPopUpDeleteCategory(item);
+                        break;
+                    }
+                    case R.id.deleteItem:
+                    {
+                        ShowPopUpDeleteItem(item);
+                        break;
+                    }
                 }
                 return false;
             }
@@ -312,7 +326,6 @@ public class workouts extends AppCompatActivity {
 
     public void ShowPopupItem(MenuItem menuItem)
     {
-
         TextView textClose;
         Button btnAddItem;
 
@@ -325,7 +338,7 @@ public class workouts extends AppCompatActivity {
         btnAddItem = (Button)myDialog.findViewById(R.id.addItem);
         itemTitle = (EditText)myDialog.findViewById(R.id.item_title);
         spinner = (Spinner)myDialog.findViewById(R.id.choose_category);
-        //Log.i(TAG, "Text size: " + (itemTitle.getTextSize() / getResources().getDisplayMetrics().scaledDensity));
+
         ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(this, R.layout.color_spinner_layout, tempHeaderList);
         itemAdapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         spinner.setAdapter(itemAdapter);
@@ -400,6 +413,190 @@ public class workouts extends AppCompatActivity {
         5) Call listAdapter.notifyDataSetChanged()
     */
 
+    public void ShowPopUpDeleteCategory(MenuItem menuItem)
+    {
+        TextView textClose;
+        Button btnRemoveCategory;
+
+        List<String> tempHeaderList = new ArrayList<>();
+        tempHeaderList.addAll(0, listHeader);
+        tempHeaderList.add(0, "Choose category");
+
+        myDialog.setContentView(R.layout.delete_category_popup);
+        textClose = (TextView)myDialog.findViewById(R.id.textCloseCategoryDelete);
+        btnRemoveCategory = (Button)myDialog.findViewById(R.id.removeCategoryButton);
+        spinner = (Spinner)myDialog.findViewById(R.id.choose_categoryDelete);
+
+        ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(this, R.layout.color_spinner_layout, tempHeaderList);
+        itemAdapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
+        spinner.setAdapter(itemAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                chosenCategory = parent.getItemAtPosition(position).toString();
+                if(chosenCategory.equals("Choose category"))
+                    categorySelected = false;
+                else
+                    categorySelected = true;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                categorySelected = false;
+            }
+        });
+
+        textClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        btnRemoveCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!categorySelected)
+                {
+                    setSpinnerError(spinner,"Field cannot be empty");
+                }
+                else {
+                    newExpandableCategory = new ArrayList<>();
+                    database = FirebaseDatabase.getInstance();
+
+                    myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(chosenCategory);  // Gets current user ID's chosen category to add to their specific workout lists
+                    myRef.removeValue();   // Remove category from database
+                    myDialog.dismiss();
+                }
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+    }
+
+    public void ShowPopUpDeleteItem(MenuItem menuItem)
+    {
+        TextView textClose;
+        Button btnRemoveItem;
+
+        List<String> tempHeaderList = new ArrayList<>();
+        tempHeaderList.addAll(0, listHeader);
+        tempHeaderList.add(0, "Choose category");
+
+        myDialog.setContentView(R.layout.delete_item_popup);
+        textClose = (TextView)myDialog.findViewById(R.id.textCloseItemDelete);
+        btnRemoveItem = (Button)myDialog.findViewById(R.id.removeItemButton);
+        spinner = (Spinner)myDialog.findViewById(R.id.choose_categoryDeleteItemPopup);
+
+        ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(this, R.layout.color_spinner_layout, tempHeaderList);
+        itemAdapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
+        spinner.setAdapter(itemAdapter);
+
+        spinnerItems = (Spinner) myDialog.findViewById(R.id.choose_ItemDelete);
+        spinnerItems.setEnabled(false);
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    chosenCategory = parent.getItemAtPosition(position).toString();
+                    if (chosenCategory.equals("Choose category"))
+                        categorySelected = false;
+                    else
+                        categorySelected = true;
+
+                    if(categorySelected)
+                        setItemSpinner();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    categorySelected = false;
+                }
+            });
+            textClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
+            });
+        /*
+        Log.i(TAG, "Category: " + chosenCategory);
+        spinnerItems.setEnabled(true);
+        ArrayList<String> tempHeaderListItems = new ArrayList<>();
+
+        ArrayAdapter<String> itemAdapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, tempHeaderListItems);
+        itemAdapter2.setDropDownViewResource(R.layout.spinner_dropdown_layout);
+        spinnerItems.setAdapter(itemAdapter2);
+        */
+        spinnerItems.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                chosenItem = parent.getItemAtPosition(position).toString();
+                if (chosenItem.equals("Choose item"))
+                    itemSelected = false;
+                else
+                    itemSelected = true;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                itemSelected = false;
+            }
+        });
+
+        btnRemoveItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!categorySelected) {
+                    setSpinnerError(spinner, "Field cannot be empty");
+                } else if (!itemSelected) {
+                    setSpinnerError(spinnerItems, "Field cannot be empty");
+                } else {
+                    newExpandableCategory = new ArrayList<>();
+                    database = FirebaseDatabase.getInstance();
+
+                    myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(chosenCategory);  // Gets current user ID's chosen category to add to their specific workout lists
+                    myRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                String item = snapshot.getValue().toString();
+                                if (item.equals(chosenItem)) {
+                                    myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(chosenCategory).child(snapshot.getKey());
+                                    myRef.removeValue();   // Remove item from database
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    myDialog.dismiss();
+                }
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+    }
+
+    public void setItemSpinner()
+    {
+        //Log.i(TAG, "Category: " + chosenCategory);
+        spinnerItems.setEnabled(true);
+        ArrayList<String> tempHeaderListItems = new ArrayList<>();
+
+        tempHeaderListItems.addAll(0, listHashMap.get(chosenCategory));
+        tempHeaderListItems.add(0, "Choose item");
+
+        ArrayAdapter<String> itemAdapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, tempHeaderListItems);
+        itemAdapter2.setDropDownViewResource(R.layout.spinner_dropdown_layout);
+        spinnerItems.setAdapter(itemAdapter2);
+
+    }
+
     public void setSpinnerError(Spinner spinner, String error)
     {
         View selectedView = spinner.getSelectedView();
@@ -411,6 +608,5 @@ public class workouts extends AppCompatActivity {
             selectedTextView.setText(error);
             spinner.requestFocus();
         }
-
     }
 }

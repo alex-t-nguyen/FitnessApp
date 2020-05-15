@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="350dp"
+    android:layout_height="300dp"
+    android:background="@color/popUpBackground"
+    android:padding="5dp"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/textCloseCategoryDelete"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:background="@drawable/circle_background"
+        android:gravity="center"
+        android:text="X"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+    <Spinner
+        android:id="@+id/choose_categoryDelete"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:theme="@style/textUnderlinePopUp"
+        android:textColor="@color/login_form_details"
+        android:layout_marginTop="60dp"
+        android:layout_gravity="center_horizontal">
+    </Spinner>
+    <Button
+        android:id="@+id/removeCategoryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Category"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/outlined_button_style"
+        android:textColor="@color/white"/>
+</LinearLayout>
