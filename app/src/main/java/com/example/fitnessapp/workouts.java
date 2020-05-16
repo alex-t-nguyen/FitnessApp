@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -496,39 +497,31 @@ public class workouts extends AppCompatActivity {
         spinnerItems = (Spinner) myDialog.findViewById(R.id.choose_ItemDelete);
         spinnerItems.setEnabled(false);
 
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    chosenCategory = parent.getItemAtPosition(position).toString();
-                    if (chosenCategory.equals("Choose category"))
-                        categorySelected = false;
-                    else
-                        categorySelected = true;
-
-                    if(categorySelected)
-                        setItemSpinner();
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                chosenCategory = parent.getItemAtPosition(position).toString();
+                if (chosenCategory.equals("Choose category")) {
                     categorySelected = false;
                 }
-            });
-            textClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    myDialog.dismiss();
-                }
-            });
-        /*
-        Log.i(TAG, "Category: " + chosenCategory);
-        spinnerItems.setEnabled(true);
-        ArrayList<String> tempHeaderListItems = new ArrayList<>();
+                else
+                    categorySelected = true;
+                setItemSpinner(categorySelected);
+            }
 
-        ArrayAdapter<String> itemAdapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, tempHeaderListItems);
-        itemAdapter2.setDropDownViewResource(R.layout.spinner_dropdown_layout);
-        spinnerItems.setAdapter(itemAdapter2);
-        */
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                categorySelected = false;
+            }
+        });
+
+        textClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
         spinnerItems.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -582,18 +575,28 @@ public class workouts extends AppCompatActivity {
         myDialog.show();
     }
 
-    public void setItemSpinner()
+    public void setItemSpinner(boolean categorySelected)
     {
-        //Log.i(TAG, "Category: " + chosenCategory);
-        spinnerItems.setEnabled(true);
-        ArrayList<String> tempHeaderListItems = new ArrayList<>();
+        if(categorySelected) {
+            spinnerItems.setEnabled(true);
+            ArrayList<String> tempHeaderListItems = new ArrayList<>();
 
-        tempHeaderListItems.addAll(0, listHashMap.get(chosenCategory));
-        tempHeaderListItems.add(0, "Choose item");
+            tempHeaderListItems.addAll(0, listHashMap.get(chosenCategory));
+            tempHeaderListItems.add(0, "Choose item");
 
-        ArrayAdapter<String> itemAdapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, tempHeaderListItems);
-        itemAdapter2.setDropDownViewResource(R.layout.spinner_dropdown_layout);
-        spinnerItems.setAdapter(itemAdapter2);
+            ArrayAdapter<String> itemAdapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, tempHeaderListItems);
+            itemAdapter2.setDropDownViewResource(R.layout.spinner_dropdown_layout);
+            spinnerItems.setAdapter(itemAdapter2);
+        }
+        else
+        {
+            ArrayList<String> tempHeaderListItems = new ArrayList<>();
+            tempHeaderListItems.add(0, "Choose item");
+
+            ArrayAdapter<String> itemAdapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, tempHeaderListItems);
+            itemAdapter2.setDropDownViewResource(R.layout.spinner_dropdown_layout);
+            spinnerItems.setAdapter(itemAdapter2);
+        }
 
     }
 
