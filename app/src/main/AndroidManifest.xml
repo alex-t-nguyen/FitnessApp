@@ -9,13 +9,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".workoutTemplate"
+            android:theme="@style/Toolbar"
+            android:parentActivityName=".workouts">
+
+        </activity>
         <activity
             android:name=".timer_stopwatch"
             android:label="@string/title_activity_timer_stopwatch"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
-        </activity>
-        <!-- Log In Screen -->
+
+        </activity> <!-- Log In Screen -->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

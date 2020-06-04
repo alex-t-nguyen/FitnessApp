@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -124,6 +125,7 @@ public class workouts extends AppCompatActivity {
         });
         */
 
+        // Workouts expandable list
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -144,6 +146,7 @@ public class workouts extends AppCompatActivity {
                                     String childValue = snapshot1.getValue().toString();
                                     newExpandableCategory.add(childValue);
                                 }
+                                // Creates item in list
                                 listHeader.add(parentKey);
                                 listHashMap.put(listHeader.get(listHeader.size() - 1), newExpandableCategory);
                                 listAdapter.notifyDataSetChanged();
@@ -167,6 +170,17 @@ public class workouts extends AppCompatActivity {
             }
         });
 
+        // Workout items list
+        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Toast.makeText(getApplicationContext(), "Clicked on " + listHashMap.get(listHeader.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Clicking timer card");
+                Intent exerciseIntent = new Intent(getApplicationContext(), workoutTemplate.class);
+                startActivity(exerciseIntent);
+                return true;
+            }
+        });
         // Drawer Menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
