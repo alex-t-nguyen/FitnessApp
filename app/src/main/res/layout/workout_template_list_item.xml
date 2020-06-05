@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:padding="15dp"
     android:id="@+id/list_item_layout">
+
+    <CheckBox
+        android:id="@+id/checkb"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:button="@drawable/custom_checkbox"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp" />
 
     <TextView
         android:id="@+id/exercise_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Exercise 1"
-        android:layout_centerVertical="true"
-        android:textSize="25sp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginStart="100dp" />
+        android:paddingTop="10dp"
+        android:textSize="20sp"
+        android:layout_marginLeft="75dp"
+        android:layout_marginStart="75dp" />
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sets x Reps"
+        android:textSize="15sp"
+        android:layout_below="@+id/exercise_name"
+        android:layout_marginLeft="75dp"
+        android:layout_marginStart="75dp"
+        android:paddingBottom="8dp"/>
 </RelativeLayout>

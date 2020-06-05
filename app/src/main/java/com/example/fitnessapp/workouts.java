@@ -177,6 +177,7 @@ public class workouts extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Clicked on " + listHashMap.get(listHeader.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Clicking timer card");
                 Intent exerciseIntent = new Intent(getApplicationContext(), workoutTemplate.class);
+                exerciseIntent.putExtra("key", "M8w9HMAJwBCvzGaEmVs");
                 startActivity(exerciseIntent);
                 return true;
             }

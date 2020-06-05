@@ -7,8 +7,14 @@
         android:orderInCategory="1"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/edit"
-        android:title="edit"
+    <item android:id="@+id/add_rest"
+        android:title="add rest"
         android:orderInCategory="2"
         app:showAsAction="never"/>
+
+    <item android:id="@+id/edit"
+        android:title="edit"
+        android:orderInCategory="3"
+        app:showAsAction="never"/>
+
 </menu>

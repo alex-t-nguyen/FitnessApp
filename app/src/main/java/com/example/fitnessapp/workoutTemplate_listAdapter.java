@@ -1,6 +1,7 @@
 package com.example.fitnessapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +21,13 @@ public class workoutTemplate_listAdapter extends Adapter<workoutTemplate_listAda
     private static final String TAG = "RecyclerViewAdapter";
 
     private ArrayList<String> mExercises = new ArrayList<>();
+    private ArrayList<String> mDescriptions = new ArrayList<>();
     private Context mContext;
 
 
-    public workoutTemplate_listAdapter(ArrayList<String> mExercises, Context mContext) {
+    public workoutTemplate_listAdapter(ArrayList<String> mExercises, ArrayList<String> mDescriptions, Context mContext) {
         this.mExercises = mExercises;
+        this.mDescriptions = mDescriptions;
         this.mContext = mContext;
     }
 
@@ -37,7 +40,10 @@ public class workoutTemplate_listAdapter extends Adapter<workoutTemplate_listAda
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, final int position) {
+        Log.d(TAG, "onBindViewHolder: called.");
+
         holder.exercise.setText(mExercises.get(position));
+        holder.description.setText(mDescriptions.get(position));
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,11 +59,13 @@ public class workoutTemplate_listAdapter extends Adapter<workoutTemplate_listAda
 
     public class viewHolder extends RecyclerView.ViewHolder {
         TextView exercise;
+        TextView description;
         RelativeLayout parentLayout;
 
         public viewHolder(View itemView) {
             super(itemView);
             exercise = itemView.findViewById(R.id.exercise_name);
+            description = itemView.findViewById(R.id.description);
             parentLayout = itemView.findViewById(R.id.list_item_layout);
         }
     }
