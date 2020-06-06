@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="#dcdcdc">
+
+    <TextView
+        android:id="@+id/rest_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="REST"
+        android:textColor="#808080"
+        android:layout_centerVertical="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="15sp"
+        android:layout_marginLeft="75dp"
+        android:layout_marginStart="75dp" />
+    <TextView
+        android:id="@+id/description_rest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:textColor="#808080"
+        android:textSize="15sp"
+        android:layout_alignStart="@+id/rest_title"
+        android:layout_centerVertical="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
+
+        android:layout_alignLeft="@+id/rest_title" />
+
+</RelativeLayout>

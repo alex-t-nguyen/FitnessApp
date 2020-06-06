@@ -1,6 +1,8 @@
 package com.example.fitnessapp;
 
 import android.content.Context;
+import android.nfc.Tag;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,60 +15,145 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
+import com.example.fitnessapp.workoutCategory.Exercise;
 import com.facebook.appevents.suggestedevents.ViewOnClickListener;
 
 import java.util.ArrayList;
 
-public class workoutTemplate_listAdapter extends Adapter<workoutTemplate_listAdapter.viewHolder>{
+public class workoutTemplate_listAdapter extends Adapter<RecyclerView.ViewHolder>{
     private static final String TAG = "RecyclerViewAdapter";
 
-    private ArrayList<String> mExercises = new ArrayList<>();
-    private ArrayList<String> mDescriptions = new ArrayList<>();
+    private ArrayList<Exercise> mExercises;
+    // ArrayList<String> mDescriptions = new ArrayList<>();
     private Context mContext;
 
+    private static int TYPE_NAME = 1;
+    private static int TYPE_REST = 2;
 
-    public workoutTemplate_listAdapter(ArrayList<String> mExercises, ArrayList<String> mDescriptions, Context mContext) {
+
+    public workoutTemplate_listAdapter(ArrayList<Exercise> mExercises, /*ArrayList<String> mDescriptions,*/ Context mContext) {
         this.mExercises = mExercises;
-        this.mDescriptions = mDescriptions;
+        //this.mDescriptions = mDescriptions;
         this.mContext = mContext;
     }
 
     @NonNull
     @Override
-    public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_template_list_item, parent, false);
-        return new viewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+        if (viewType == TYPE_NAME) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_template_list_item, parent, false);
+            return new viewHolderName(view);
+        }
+        else //
+        {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_template_list_item_rest, parent, false);
+            return new viewHolderRest(view);
+        }
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+        if(getItemViewType(position) == TYPE_NAME)
+        {
+            ((viewHolderName)holder).setNameDetails(mExercises.get(position));
+            ((viewHolderName)holder).parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, mExercises.get(position).getName(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else
+            ((viewHolderRest)holder).setRestDetails(mExercises.get(position));
+    }
+
+    /*
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
-        holder.exercise.setText(mExercises.get(position));
-        holder.description.setText(mDescriptions.get(position));
+        holder.exercise.setText(mExercises.get(position).getName());
+        String description = mExercises.get(position).getSets() + " x " + mExercises.get(position).getReps();
+        Log.d(TAG, "description: " + mExercises.get(position).getSets() + " sets.");
+        holder.description.setText(description);
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, mExercises.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mExercises.get(position).getName(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+    */
 
     @Override
     public int getItemCount() {
         return mExercises.size();
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public int getItemViewType(int position)
+    {
+        if(TextUtils.isEmpty(mExercises.get(position).getRest()))
+            return TYPE_NAME;
+        else
+            return TYPE_REST;
+    }
+
+    public class viewHolderName extends RecyclerView.ViewHolder {
         TextView exercise;
         TextView description;
         RelativeLayout parentLayout;
 
-        public viewHolder(View itemView) {
+        public viewHolderName(View itemView) {
             super(itemView);
             exercise = itemView.findViewById(R.id.exercise_name);
             description = itemView.findViewById(R.id.description);
             parentLayout = itemView.findViewById(R.id.list_item_layout);
+
         }
+        private void setNameDetails(Exercise e)
+        {
+            exercise.setText(e.getName());
+            String desc = e.getSets() + " x " + e.getReps();
+            description.setText(desc);
+        }
+
+    }
+
+    public class viewHolderRest extends RecyclerView.ViewHolder {
+        TextView exercise;
+        TextView description;
+        RelativeLayout parentLayout;
+
+        public viewHolderRest(View itemView) {
+            super(itemView);
+            exercise = itemView.findViewById(R.id.rest_title);
+            description = itemView.findViewById(R.id.description_rest);
+            parentLayout = itemView.findViewById(R.id.list_item_layout);
+        }
+        private void setRestDetails(Exercise e)
+        {
+            exercise.setText("REST");
+            int restTime = Integer.parseInt(e.getRest());
+            int seconds = restTime;
+            int minutes = 0;
+            String timeFormatted;
+            if(restTime > 60) {
+                seconds = restTime % 60;
+                minutes = restTime / 60;
+            }
+            if (minutes < 10 && seconds < 10)   // If min and sec are both single digit
+                timeFormatted = "0" + minutes + ":" + "0" + seconds;
+            else if (minutes < 10 && seconds > 10)  // If only min is single digit
+                timeFormatted = "0" + minutes + ":" + seconds;
+            else if (minutes > 10 && seconds < 10)  // If only sec is single digit
+                timeFormatted = minutes + ":" + "0" + seconds;
+            else    // If neither min or sec are single digit
+                timeFormatted = minutes + ":" + seconds;
+            description.setText(timeFormatted);
+        }
+
+
     }
 }

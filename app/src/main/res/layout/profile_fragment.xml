@@ -82,6 +82,7 @@
             style="@style/viewParent.headerText.settingsMiniTitle"
             android:text="Logins"/>
         <TextView
+            android:id="@+id/help"
             style="@style/viewParent.headerText.settingsTextIcon"
             android:drawableLeft="@drawable/ic_help_outline_black_24dp"
             android:text="Help"

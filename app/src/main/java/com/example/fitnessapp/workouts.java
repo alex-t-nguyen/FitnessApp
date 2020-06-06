@@ -24,7 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -72,8 +71,10 @@ public class workouts extends AppCompatActivity {
     // Firebase Database variables
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-    private String userID;
+    private String workoutKey;
     private List<String> newExpandableCategory;
+
+    private HashMap<String, String> keyHashMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +93,8 @@ public class workouts extends AppCompatActivity {
         listView = (ExpandableListView)findViewById(R.id.expandable_list_view);
         //initializeData();
 
-        listAdapter = new expandableListAdapter(this, listHeader, listHashMap);
-        listView.setAdapter(listAdapter);
+        //listAdapter = new expandableListAdapter(this, listHeader, listHashMap);
+        //listView.setAdapter(listAdapter);
 
         // Pop-up menu
         myDialog = new Dialog(this);
@@ -102,6 +103,45 @@ public class workouts extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid());  // Gets current user ID to add to their specific workout lists
 
+        // initializeData();
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listHashMap.clear();
+                listHeader.clear();
+                for (final DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    DatabaseReference childReference = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey());
+                    childReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final ArrayList<String> items = new ArrayList<>();
+                            for (DataSnapshot snapshot1 : dataSnapshot.getChildren())
+                            {
+                                items.add(snapshot1.getKey());
+                            }
+                            //Log.d(TAG, "Header Size: " + listHeader.size());
+                            //Log.d(TAG, "HashMap Size: " + listHashMap.size());
+                            listHeader.add(snapshot.getKey());
+                            listHashMap.put(listHeader.get(listHeader.size() - 1), items);
+                            listAdapter = new expandableListAdapter(getApplicationContext(), listHeader, listHashMap);
+                            listView.setAdapter(listAdapter);
+                            listAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         // Get list of workouts data from database and load onto screen
         /*
         myRef.addValueEventListener(new ValueEventListener() {
@@ -124,7 +164,7 @@ public class workouts extends AppCompatActivity {
             }
         });
         */
-
+        /*
         // Workouts expandable list
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -137,19 +177,19 @@ public class workouts extends AppCompatActivity {
                     try {
                         final String parentKey = snapshot.getKey();  // contains "Push" category
                         DatabaseReference childReference = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(parentKey);
-
                         childReference.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 newExpandableCategory = new ArrayList<>();
                                 for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
-                                    String childValue = snapshot1.getValue().toString();
+                                    String childValue = snapshot1.getKey();
                                     newExpandableCategory.add(childValue);
                                 }
                                 // Creates item in list
-                                listHeader.add(parentKey);
-                                listHashMap.put(listHeader.get(listHeader.size() - 1), newExpandableCategory);
-                                listAdapter.notifyDataSetChanged();
+                                    Log.d(TAG, "size2: " + newExpandableCategory.size());
+                                    listHeader.add(parentKey);
+                                    listHashMap.put(listHeader.get(listHeader.size() - 1), newExpandableCategory);
+                                    listAdapter.notifyDataSetChanged();
                             }
 
                             @Override
@@ -169,19 +209,154 @@ public class workouts extends AppCompatActivity {
 
             }
         });
+        */
 
+        keyHashMap = new HashMap<>();
+        final Intent exerciseIntent = new Intent(getApplicationContext(), workoutTemplate.class);
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(final DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    try {
+                        final String parentKey = snapshot.getKey();
+                        final DatabaseReference childReference = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(parentKey);
+
+                        childReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+
+                                for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
+                                    String childValue = snapshot1.getValue().toString();
+                                    keyHashMap.put(snapshot1.getKey(), snapshot1.getKey());
+                                    listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                                        @Override
+                                        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                                            Toast.makeText(getApplicationContext(), "Clicked on " + listHashMap.get(listHeader.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
+                                            //System.out.println("Child value: " + childValue);
+                                            //if(keyHashMap.get(listHashMap.get(listHeader.get(groupPosition)).get(childPosition)).equals(snap)
+                                            String key = keyHashMap.get(listHashMap.get(listHeader.get(groupPosition)).get(childPosition));
+                                            String group = listHeader.get(groupPosition);
+                                            exerciseIntent.putExtra("selectedWorkoutKey", key);
+                                            exerciseIntent.putExtra("selectedWorkoutGroup", group);
+                                            startActivity(exerciseIntent);
+                                                //childReference.removeEventListener(this);
+                                            return true;
+                                        }
+                                    });
+                                    //System.out.println(keyHashMap);
+                                    /*if (snapshot1.getKey() == null)
+                                        Log.i(TAG, "null");
+                                    else
+                                        Log.i(TAG, snapshot1.getKey());
+                                    */
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                        childReference.removeEventListener(this);
+                    }
+                    catch(Exception e)
+                    {
+                        Log.i(TAG, "Exception2: " + e.toString());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
+
+        /*
         // Workout items list
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            public boolean onChildClick(final ExpandableListView parent, View v, final int groupPosition, final int childPosition, long id) {
                 Toast.makeText(getApplicationContext(), "Clicked on " + listHashMap.get(listHeader.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Clicking timer card");
-                Intent exerciseIntent = new Intent(getApplicationContext(), workoutTemplate.class);
-                exerciseIntent.putExtra("key", "M8w9HMAJwBCvzGaEmVs");
+
+                final Intent exerciseIntent = new Intent(getApplicationContext(), workoutTemplate.class);
+
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(final DataSnapshot snapshot : dataSnapshot.getChildren())
+                        {
+                            try {
+                                final String parentKey = snapshot.getKey();
+                                final DatabaseReference childReference = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(parentKey);
+
+                                childReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                        for (final DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
+                                            final String childValue = snapshot1.getValue().toString();
+
+                                            listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                                                @Override
+                                                public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                                                    if(childValue.equals(listHashMap.get(listHeader.get(groupPosition)).get(childPosition))) {
+                                                        exerciseIntent.putExtra("selectedWorkout", snapshot1.getKey());
+                                                        startActivity(exerciseIntent);
+                                                        //childReference.removeEventListener(this);
+                                                    }
+                                                    return false;
+                                                }
+                                            });
+                                            if (snapshot1.getKey() == null)
+                                                Log.i(TAG, "null");
+                                            else
+                                                Log.i(TAG, snapshot1.getKey());
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                                childReference.removeEventListener(this);
+                            }
+                            catch(Exception e)
+                            {
+                                Log.i(TAG, "Exception2: " + e.toString());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+
+                });
+                /*
+                exerciseIntent.putExtra("selectedWorkout", key);
                 startActivity(exerciseIntent);
+                //exerciseIntent.putExtra("key", "M8w9HMAJwBCvzGaEmVs");
+                if (key == null)
+                    Log.i(TAG, "null");
+                else
+                    Log.i(TAG, key);
+                startActivity(exerciseIntent);
+
+                //startActivity(exerciseIntent);
+
                 return true;
             }
         });
+        */
         // Drawer Menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -309,10 +484,10 @@ public class workouts extends AppCompatActivity {
                 }
                 if(validTitle) {
                     listHeader.add(headerTitle);    // Add header title to list of headers
-                    final List<String> newExpandableCategory = new ArrayList<>(); // Create new expandable list w/ 0 items
-                    listHashMap.put(listHeader.get(listHeader.size() - 1), newExpandableCategory);
+                    newExpandableCategory = new ArrayList<>(); // Create new expandable list w/ 0 items
+                    //listHashMap.put(listHeader.get(listHeader.size() - 1), newExpandableCategory);
                     myDialog.dismiss();
-                    listAdapter.notifyDataSetChanged();
+                    //listAdapter.notifyDataSetChanged();
                     database = FirebaseDatabase.getInstance();
                     myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(listHeader.get(listHeader.size() - 1));  // Gets current user ID to add to their specific workout lists
                     myRef.setValue(listHeader.get(listHeader.size() - 1));   // Add category to database
@@ -403,8 +578,11 @@ public class workouts extends AppCompatActivity {
                     database = FirebaseDatabase.getInstance();
 
                     myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(chosenCategory);  // Gets current user ID's chosen category to add to their specific workout lists
-                    myRef.push().setValue(headerTitle);   // Add item to database
+                    myRef.child(headerTitle).setValue(headerTitle);   // Add item to database
                     myDialog.dismiss();
+
+                    //listHashMap.get(chosenCategory).add(headerTitle);
+                    //listAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -478,7 +656,9 @@ public class workouts extends AppCompatActivity {
                     setSpinnerError(spinner,"Field cannot be empty");
                 }
                 else {
-                    newExpandableCategory = new ArrayList<>();
+                    //listHashMap.remove(chosenCategory);
+                    //listAdapter.notifyDataSetChanged();
+
                     database = FirebaseDatabase.getInstance();
 
                     myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(chosenCategory);  // Gets current user ID's chosen category to add to their specific workout lists
@@ -566,13 +746,34 @@ public class workouts extends AppCompatActivity {
 
                     myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(chosenCategory);  // Gets current user ID's chosen category to add to their specific workout lists
                     myRef.addValueEventListener(new ValueEventListener() {
+
+                        /*
+                            --------------------------------------------------------------
+                            onDataChange is ASYNCHRONOUS
+                            Deleting an item stores string variable (chosenItem) globally b/c it is a private variable
+                            When trying to add workout with the same name as chosenItem the if statement returns true
+                            Resulting in the value being deleted immediately after being pushed to database
+                            SOLUTION:
+                                1) Make chosenItem String variable local so that the value is not saved after function ends
+                                2) Reset chosenItem String variable to an empty String at end of function
+                            --------------------------------------------------------------
+                         */
+
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                String item = snapshot.getValue().toString();
+
+                                String item = snapshot.getKey();
+                                newExpandableCategory.add(item);
                                 if (item.equals(chosenItem)) {
                                     myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(chosenCategory).child(snapshot.getKey());
+                                    Log.d(TAG, snapshot.getKey());
                                     myRef.removeValue();   // Remove item from database
+                                    newExpandableCategory.remove(item);
+                                    chosenItem = "";
+                                    //Log.d(TAG, "Header Size: " + listHeader.size());
+                                    //Log.d(TAG, "HashMap Size: " + listHashMap.size());
+                                    //listAdapter.notifyDataSetChanged();
                                 }
                             }
                         }
@@ -627,4 +828,5 @@ public class workouts extends AppCompatActivity {
             spinner.requestFocus();
         }
     }
+
 }

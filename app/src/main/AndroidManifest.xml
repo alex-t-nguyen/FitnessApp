@@ -27,7 +27,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Sign Up screen -->
+        </activity>
+        <!-- Sign Up screen -->
         <activity android:name=".signUp">
             <intent-filter>
                 <action android:name=".signUp" />
