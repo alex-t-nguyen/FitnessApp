@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,6 +52,7 @@ public class workoutTemplate extends AppCompatActivity {
     // Firebase variables
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    private String workoutKey, workoutGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +68,8 @@ public class workoutTemplate extends AppCompatActivity {
         inipopupaddRest();
 
         Intent intent = getIntent();
-        String workoutKey = intent.getStringExtra("selectedWorkoutKey");
-        String workoutGroup = intent.getStringExtra("selectedWorkoutGroup");
+        workoutKey = intent.getStringExtra("selectedWorkoutKey");
+        workoutGroup = intent.getStringExtra("selectedWorkoutGroup");
         if (workoutKey == null)
             Log.d(TAG, "null");
         if(workoutGroup == null)
@@ -89,6 +91,7 @@ public class workoutTemplate extends AppCompatActivity {
         recyclerView.addItemDecoration(itemDecoration);
 
         adapter = new workoutTemplate_listAdapter(mExercises, /*mDescriptions,*/getApplicationContext());
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -291,4 +294,40 @@ public class workoutTemplate extends AppCompatActivity {
             }
         });
     }
+
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+            Log.d(TAG, "Name position: " + mExercises.get(viewHolder.getAdapterPosition()).getName());
+
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                    {
+                        Exercise exercise = snapshot.getValue(Exercise.class);
+                        if(exercise.getName().equals(mExercises.get(viewHolder.getAdapterPosition()).getName()))
+                            myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(workoutGroup).child(workoutKey).child(snapshot.getKey());
+                        //Log.d(TAG, "Name: " + exercise.getName());
+
+                    }
+                    myRef.removeValue();
+                    mExercises.remove(viewHolder.getAdapterPosition());
+                    adapter.notifyDataSetChanged();
+                    // Reset reference to selected workout
+                    myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(workoutGroup).child(workoutKey);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+    };
 }
