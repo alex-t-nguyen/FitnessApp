@@ -36,7 +36,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity> <!-- Home Screen -->
-        <activity android:name=".Home">
+        <activity android:name=".Home"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name=".Home" />
 

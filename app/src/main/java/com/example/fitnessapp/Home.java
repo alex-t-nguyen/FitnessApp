@@ -1,5 +1,6 @@
 package com.example.fitnessapp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -28,8 +29,8 @@ public class Home extends AppCompatActivity {
         appBarLayout = (AppBarLayout)findViewById(R.id.appBar);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager());
-        // Adding Fragments
 
+        // Adding Fragments
         adapter.addFragment(new menu_fragment(),"Menu");
         adapter.addFragment(new geolocation_fragment(),"Map");
         adapter.addFragment(new profile_fragment(),"Profile");

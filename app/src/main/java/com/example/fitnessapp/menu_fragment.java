@@ -1,11 +1,19 @@
 package com.example.fitnessapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ListView;
@@ -13,12 +21,17 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fitnessapp.menuCards.menu_adapter;
+import com.example.fitnessapp.menuCards.menu_item;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class menu_fragment extends Fragment implements View.OnClickListener{
+public class menu_fragment extends Fragment implements menu_adapter.onMenuCardListener {
     private View view;
     private FloatingActionButton fab_plus, fab_add_menu, fab_clear_menu;
     private Animation fabOpen, fabClose, fabRotateClockwise, fabRotateCounterClockwise;
@@ -26,15 +39,30 @@ public class menu_fragment extends Fragment implements View.OnClickListener{
     private static final String TAG = "Menu";
     private CardView workoutCard, dietCard, clockCard;
     private ListView mListView;
+    private List<menu_item> cardList;
+    private RecyclerView recyclerView;
+
     public menu_fragment()
     {
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        cardList = new ArrayList<>();
+        cardList.add(new menu_item(R.drawable.workout_bg, "Save", "Workouts", "Workouts"));
+        cardList.add(new menu_item(R.drawable.stopwatch_timer_bg, "Track", "Time", "Timer/Stopwatch"));
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.menu_fragment,container,false);
+
+        /*
+        // FAB button ids
         fab_plus = (FloatingActionButton)view.findViewById(R.id.fab_plus);
         fab_add_menu = (FloatingActionButton)view.findViewById(R.id.fab_add);
         fab_clear_menu = (FloatingActionButton)view.findViewById(R.id.fab_clear);
@@ -42,12 +70,16 @@ public class menu_fragment extends Fragment implements View.OnClickListener{
         fabClose = AnimationUtils.loadAnimation(getContext(), R.anim.fab_close);
         fabRotateClockwise = AnimationUtils.loadAnimation(getContext(), R.anim.rotate_clockwise);
         fabRotateCounterClockwise = AnimationUtils.loadAnimation(getContext(), R.anim.rotate_counter_clockwise);
+        */
 
+        /*
         // Cards in menu
         workoutCard = (CardView)view.findViewById(R.id.workout_card);
         dietCard = (CardView)view.findViewById(R.id.diet_card);
         clockCard = (CardView)view.findViewById(R.id.timerstopwatch_card);
+        */
 
+        /*
         // FAB button
         fab_plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,14 +108,26 @@ public class menu_fragment extends Fragment implements View.OnClickListener{
                 }
             }
         });
+        */
 
+        Window window = getActivity().getWindow();
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        recyclerView = view.findViewById(R.id.menu_frag_recyclerview);
+        menu_adapter adapter = new menu_adapter(getContext(), cardList, this);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+
+        /*
         workoutCard.setOnClickListener(this);
         dietCard.setOnClickListener(this);
         clockCard.setOnClickListener(this);
-
+        */
         return view;
     }
 
+    /*
     public void onClick(View view)
     {
         switch(view.getId())
@@ -114,6 +158,31 @@ public class menu_fragment extends Fragment implements View.OnClickListener{
             }
             default:
                 Log.i(TAG, "Clicking default case");
+        }
+    }
+    */
+
+    @Override
+    public void onMenuCardClick(int position) {
+        menu_item card = cardList.get(position);
+        switch (card.getMainTitle())
+        {
+            case "Workouts":
+            {
+                Log.i(TAG, "Clicking workout card");
+                Intent workoutIntent = new Intent(getActivity(), workouts.class);
+                startActivity(workoutIntent);
+                break;
+            }
+            case "Timer/Stopwatch":
+            {
+                Log.i(TAG, "Clicking timer card");
+                Intent timerStopwatchIntent = new Intent(getActivity(), timer_stopwatch.class);
+                startActivity(timerStopwatchIntent);
+                break;
+            }
+            default:
+                Log.d(TAG, "Clicking default case");
         }
     }
 }

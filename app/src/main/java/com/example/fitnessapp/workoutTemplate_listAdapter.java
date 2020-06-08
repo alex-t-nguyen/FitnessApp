@@ -4,7 +4,9 @@ import android.content.Context;
 import android.nfc.Tag;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -12,16 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.example.fitnessapp.workoutCategory.Exercise;
-import com.facebook.appevents.suggestedevents.ViewOnClickListener;
 
 import java.util.ArrayList;
 
-public class workoutTemplate_listAdapter extends Adapter<RecyclerView.ViewHolder>{
+public class workoutTemplate_listAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "RecyclerViewAdapter";
+    private ItemTouchHelper itemTouchHelper;
 
     private ArrayList<Exercise> mExercises;
     // ArrayList<String> mDescriptions = new ArrayList<>();
@@ -45,7 +47,7 @@ public class workoutTemplate_listAdapter extends Adapter<RecyclerView.ViewHolder
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_template_list_item, parent, false);
             return new viewHolderName(view);
         }
-        else //
+        else // TYPE_REST
         {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_template_list_item_rest, parent, false);
             return new viewHolderRest(view);
@@ -66,6 +68,12 @@ public class workoutTemplate_listAdapter extends Adapter<RecyclerView.ViewHolder
         }
         else
             ((viewHolderRest)holder).setRestDetails(mExercises.get(position));
+    }
+
+    public void setList (ArrayList<Exercise> exerciseList)
+    {
+        this.mExercises = exerciseList;
+        notifyDataSetChanged();
     }
 
     /*
@@ -100,7 +108,7 @@ public class workoutTemplate_listAdapter extends Adapter<RecyclerView.ViewHolder
             return TYPE_REST;
     }
 
-    public class viewHolderName extends RecyclerView.ViewHolder {
+    public class viewHolderName extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView exercise;
         TextView description;
         RelativeLayout parentLayout;
@@ -111,6 +119,8 @@ public class workoutTemplate_listAdapter extends Adapter<RecyclerView.ViewHolder
             description = itemView.findViewById(R.id.description);
             parentLayout = itemView.findViewById(R.id.list_item_layout);
 
+
+            itemView.setOnClickListener(this);
         }
         private void setNameDetails(Exercise e)
         {
@@ -119,9 +129,13 @@ public class workoutTemplate_listAdapter extends Adapter<RecyclerView.ViewHolder
             description.setText(desc);
         }
 
+        @Override
+        public void onClick(View v) {
+
+        }
     }
 
-    public class viewHolderRest extends RecyclerView.ViewHolder {
+    public class viewHolderRest extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView exercise;
         TextView description;
         RelativeLayout parentLayout;
@@ -131,6 +145,8 @@ public class workoutTemplate_listAdapter extends Adapter<RecyclerView.ViewHolder
             exercise = itemView.findViewById(R.id.rest_title);
             description = itemView.findViewById(R.id.description_rest);
             parentLayout = itemView.findViewById(R.id.list_item_layout);
+
+            itemView.setOnClickListener(this);
         }
         private void setRestDetails(Exercise e)
         {
@@ -154,6 +170,9 @@ public class workoutTemplate_listAdapter extends Adapter<RecyclerView.ViewHolder
             description.setText(timeFormatted);
         }
 
+        @Override
+        public void onClick(View v) {
 
+        }
     }
 }

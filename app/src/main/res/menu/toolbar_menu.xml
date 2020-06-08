@@ -13,7 +13,7 @@
         app:showAsAction="never"/>
 
     <item android:id="@+id/edit"
-        android:title="edit"
+        android:title="save edit"
         android:orderInCategory="3"
         app:showAsAction="never"/>
 

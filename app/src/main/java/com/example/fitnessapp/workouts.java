@@ -93,8 +93,8 @@ public class workouts extends AppCompatActivity {
         listView = (ExpandableListView)findViewById(R.id.expandable_list_view);
         //initializeData();
 
-        //listAdapter = new expandableListAdapter(this, listHeader, listHashMap);
-        //listView.setAdapter(listAdapter);
+        listAdapter = new expandableListAdapter(this, listHeader, listHashMap);
+        listView.setAdapter(listAdapter);
 
         // Pop-up menu
         myDialog = new Dialog(this);
@@ -109,9 +109,10 @@ public class workouts extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listHashMap.clear();
                 listHeader.clear();
+
                 for (final DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
-                    DatabaseReference childReference = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey());
+                    final DatabaseReference childReference = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey());
                     childReference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -121,12 +122,13 @@ public class workouts extends AppCompatActivity {
                                 items.add(snapshot1.getKey());
                             }
                             //Log.d(TAG, "Header Size: " + listHeader.size());
-                            //Log.d(TAG, "HashMap Size: " + listHashMap.size());
+
                             listHeader.add(snapshot.getKey());
                             listHashMap.put(listHeader.get(listHeader.size() - 1), items);
-                            listAdapter = new expandableListAdapter(getApplicationContext(), listHeader, listHashMap);
-                            listView.setAdapter(listAdapter);
+                            //listAdapter = new expandableListAdapter(getApplicationContext(), listHeader, listHashMap);
+                            //listView.setAdapter(listAdapter);
                             listAdapter.notifyDataSetChanged();
+                            childReference.removeEventListener(this);
                         }
 
                         @Override
