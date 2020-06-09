@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.facebook.login.Login;
 import com.facebook.login.LoginManager;
@@ -24,8 +26,8 @@ import org.w3c.dom.Text;
 
 public class profile_fragment extends Fragment implements View.OnClickListener {
     private View view;
-    private FirebaseAuth mAuth;
     private TextView logout;
+    //private LinearLayout container;
     public profile_fragment()
     {
 
@@ -35,14 +37,14 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.profile_fragment,container,false);
-        mAuth = FirebaseAuth.getInstance();
         logout = (TextView)view.findViewById(R.id.log_out);
-
+        //container = view.findViewById(R.id.menu_container);
         logout.setOnClickListener(this);
 
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
         {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            getActivity().setTheme(R.style.darktheme);
         }
         else
         {
@@ -65,12 +67,17 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
                 if(isChecked)
                 {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    getFragmentManager().beginTransaction().replace(R.id.viewpager, new profile_fragment()).commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.viewpager, new profile_fragment()).commit();
+                    //container.setBackgroundColor(getResources().getColor(R.color.black));
+                    //container.setBackgroundResource(R.drawable.card_bg_dark);
+
                 }
                 else
                 {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    getFragmentManager().beginTransaction().replace(R.id.viewpager, new profile_fragment()).commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.viewpager, new profile_fragment()).commit();
+                    //container.setBackgroundColor(getResources().getColor(R.color.white));
+                    //container.setBackgroundResource(R.drawable.card_bg);
                 }
             }
         });

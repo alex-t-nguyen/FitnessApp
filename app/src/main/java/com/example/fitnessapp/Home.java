@@ -46,4 +46,5 @@ public class Home extends AppCompatActivity {
         TextView date = findViewById(R.id.calendarDate);
         date.setText(date_n);
     }
+
 }

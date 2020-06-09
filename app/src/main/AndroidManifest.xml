@@ -21,7 +21,8 @@
             android:windowSoftInputMode="adjustPan">
 
         </activity> <!-- Log In Screen -->
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

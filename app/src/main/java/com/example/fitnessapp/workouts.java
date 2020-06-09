@@ -230,12 +230,12 @@ public class workouts extends AppCompatActivity {
                             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
 
                                 for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
-                                    String childValue = snapshot1.getValue().toString();
+                                    // String childValue = snapshot1.getValue().toString();
                                     keyHashMap.put(snapshot1.getKey(), snapshot1.getKey());
                                     listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
                                         @Override
                                         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                                            Toast.makeText(getApplicationContext(), "Clicked on " + listHashMap.get(listHeader.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getApplicationContext(), listHashMap.get(listHeader.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
                                             //System.out.println("Child value: " + childValue);
                                             //if(keyHashMap.get(listHashMap.get(listHeader.get(groupPosition)).get(childPosition)).equals(snap)
                                             String key = keyHashMap.get(listHashMap.get(listHeader.get(groupPosition)).get(childPosition));

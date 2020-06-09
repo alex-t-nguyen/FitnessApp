@@ -4,13 +4,14 @@
     android:layout_height="wrap_content"
     android:padding="8dp"
     android:background="@color/workoutCard"
-    android:orientation="vertical">
+    android:orientation="vertical" >
     
     <TextView
         android:id="@+id/list_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:textSize="16sp"
-        android:textColor="#fff"/>
+        android:textColor="#F9F6F4"
+        android:textSize="18sp"
+        android:gravity="center_vertical"/>
 </LinearLayout>

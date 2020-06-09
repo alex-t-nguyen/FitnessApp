@@ -24,37 +24,33 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.fitnessapp.menuCards.menu_adapter;
-import com.example.fitnessapp.menuCards.menu_item;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class menu_fragment extends Fragment implements menu_adapter.onMenuCardListener {
+public class menu_fragment extends Fragment implements View.OnClickListener {
     private View view;
     private FloatingActionButton fab_plus, fab_add_menu, fab_clear_menu;
     private Animation fabOpen, fabClose, fabRotateClockwise, fabRotateCounterClockwise;
     private boolean isOpen = false;
     private static final String TAG = "Menu";
     private CardView workoutCard, dietCard, clockCard;
-    private ListView mListView;
-    private List<menu_item> cardList;
-    private RecyclerView recyclerView;
 
     public menu_fragment()
     {
 
     }
-
+    /*
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         cardList = new ArrayList<>();
-        cardList.add(new menu_item(R.drawable.workout_bg, "Save", "Workouts", "Workouts"));
-        cardList.add(new menu_item(R.drawable.stopwatch_timer_bg, "Track", "Time", "Timer/Stopwatch"));
+        cardList.add(new menu_item(R.drawable.muscle_icon, "Save you workouts", "WORKOUTS"));
+        cardList.add(new menu_item(R.drawable.maintenance_icon, "Track your time","TIMER / STOPWATCH"));
     }
+    */
 
     @Nullable
     @Override
@@ -72,12 +68,12 @@ public class menu_fragment extends Fragment implements menu_adapter.onMenuCardLi
         fabRotateCounterClockwise = AnimationUtils.loadAnimation(getContext(), R.anim.rotate_counter_clockwise);
         */
 
-        /*
+
         // Cards in menu
         workoutCard = (CardView)view.findViewById(R.id.workout_card);
-        dietCard = (CardView)view.findViewById(R.id.diet_card);
+        //dietCard = (CardView)view.findViewById(R.id.diet_card);
         clockCard = (CardView)view.findViewById(R.id.timerstopwatch_card);
-        */
+
 
         /*
         // FAB button
@@ -110,6 +106,7 @@ public class menu_fragment extends Fragment implements menu_adapter.onMenuCardLi
         });
         */
 
+        /*
         Window window = getActivity().getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
@@ -119,15 +116,16 @@ public class menu_fragment extends Fragment implements menu_adapter.onMenuCardLi
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
 
-        /*
-        workoutCard.setOnClickListener(this);
-        dietCard.setOnClickListener(this);
-        clockCard.setOnClickListener(this);
         */
+
+        workoutCard.setOnClickListener(this);
+//        dietCard.setOnClickListener(this);
+        clockCard.setOnClickListener(this);
+
         return view;
     }
 
-    /*
+
     public void onClick(View view)
     {
         switch(view.getId())
@@ -140,14 +138,7 @@ public class menu_fragment extends Fragment implements menu_adapter.onMenuCardLi
                 startActivity(workoutIntent);
                 break;
             }
-            case R.id.diet_card:
-            {
-                Log.i(TAG, "Clicking Diet card");
-                //getActivity().finish();
-                //Intent dietIntent = new Intent(getActivity(), diet.class);
-                //startActivity(dietIntent);
-                break;
-            }
+
             case R.id.timerstopwatch_card:
             {
                 //getActivity().finish();
@@ -160,8 +151,9 @@ public class menu_fragment extends Fragment implements menu_adapter.onMenuCardLi
                 Log.i(TAG, "Clicking default case");
         }
     }
-    */
 
+
+    /*
     @Override
     public void onMenuCardClick(int position) {
         menu_item card = cardList.get(position);
@@ -185,4 +177,5 @@ public class menu_fragment extends Fragment implements menu_adapter.onMenuCardLi
                 Log.d(TAG, "Clicking default case");
         }
     }
+    */
 }

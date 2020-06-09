@@ -38,6 +38,10 @@
     <color name="dietCard">#64B990</color>
     <color name="timerStopwatchCard">#03A9F4</color>
 
+    <color name="card_bg_color_light">#f6f6f6</color>
+    <color name="card_bg_color_dark">#0e0e0e</color>
+    <color name="black">#0e0e0e</color>
+
     // Menu add button
     <color name="add_menu">#4CAF50</color>
     <color name="clear_menu">#2196F3</color>
