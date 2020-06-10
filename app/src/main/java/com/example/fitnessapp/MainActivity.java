@@ -2,15 +2,23 @@ package com.example.fitnessapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -41,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText username;
     private EditText password;
     private Button button_login;
-    private TextView signUp;
+    private TextView signUp, forgotpassbtn, forgotPassText, forgotPassSignUpBtn;
+    Button popupSendEmailbtn;
     private LoginButton fbLogin;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -52,15 +61,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseReference myRef;
     private String userID;
 
+    private Dialog popupForgotPass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         button_login = (Button)findViewById(R.id.btn_login);
         signUp = (TextView)findViewById(R.id.sign_up);
+        forgotpassbtn = (TextView)findViewById(R.id.forgot_password);
 
         button_login.setOnClickListener(this);
         signUp.setOnClickListener(this);
+        forgotpassbtn.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
         username = (EditText)findViewById(R.id.username);
@@ -80,11 +93,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onCancel() {
                 Log.d(TAG, "onCancel");
+                updateUI(null);
             }
 
             @Override
             public void onError(FacebookException error) {
                 Log.d(TAG, "onError" + error);
+                updateUI(null);
             }
         });
 
@@ -141,8 +156,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     public void updateUI(FirebaseUser user)
@@ -159,7 +174,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(authStateListener);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+        //mAuth.addAuthStateListener(authStateListener);
     }
 
     @Override
@@ -232,8 +249,65 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.sign_up:
             {
                 Intent signUpSuccess = new Intent(MainActivity.this, signUp.class);
-                getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   // Clear all tasks on top of task (prevent hitting back button to go back to login)
                 startActivity(signUpSuccess);
+                finish();
+                break;
+            }
+            case R.id.forgot_password:
+            {
+                Log.d(TAG, "Clicked forgot password");
+                popupForgotPass = new Dialog(this);
+                popupForgotPass.setContentView(R.layout.forgot_password_popup);
+
+                popupForgotPass.getWindow().setLayout(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.WRAP_CONTENT);
+
+                forgotPassText = popupForgotPass.findViewById(R.id.forgot_pass_text);
+                popupSendEmailbtn = popupForgotPass.findViewById(R.id.send_pass_email_btn);
+
+                forgotPassSignUpBtn = popupForgotPass.findViewById(R.id.forgot_pass_signup);
+
+                popupSendEmailbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String email = forgotPassText.getText().toString();
+
+                        // Email validation
+                        if (email.isEmpty())
+                        {
+                            forgotPassText.setError("Field cannot be empty");
+                            forgotPassText.requestFocus();
+                            return;
+                        }
+                        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                        {
+                            username.setError("Please enter a valid email");
+                            username.requestFocus();
+                            return;
+                        }
+
+                        FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful())
+                                {
+                                    Toast.makeText(getApplicationContext(), "Password reset link sent", Toast.LENGTH_SHORT).show();
+                                }
+                                else
+                                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        popupForgotPass.dismiss();
+                    }
+                });
+                forgotPassSignUpBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent signUpIntent = new Intent(MainActivity.this, signUp.class);
+                        startActivity(signUpIntent);
+                        finish();
+                    }
+                });
+                popupForgotPass.show();
                 break;
             }
         }

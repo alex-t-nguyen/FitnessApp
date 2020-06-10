@@ -93,8 +93,8 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(signUp.this, "Authentication successful.",
                                     Toast.LENGTH_SHORT).show();
-                            //Intent returnLogin = new Intent(".MainActivity");
-                            //startActivity(returnLogin);
+                            Intent openApp = new Intent(".Home");
+                            startActivity(openApp);
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -126,7 +126,7 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
                 startActivity(returnLogin);
                 break;
             }
-            case R.id.btn_signup:   // registerUser function is being called successfully
+            case R.id.btn_signup:   // registerUser function
             {
                 registerUser();
                 break;

@@ -1,5 +1,6 @@
 package com.example.fitnessapp;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,7 +28,8 @@ import org.w3c.dom.Text;
 public class profile_fragment extends Fragment implements View.OnClickListener {
     private View view;
     private TextView logout;
-    //private LinearLayout container;
+    private Dialog popup_logout;
+
     public profile_fragment()
     {
 
@@ -38,7 +40,7 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.profile_fragment,container,false);
         logout = (TextView)view.findViewById(R.id.log_out);
-        //container = view.findViewById(R.id.menu_container);
+
         logout.setOnClickListener(this);
 
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
@@ -90,6 +92,7 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
         {
             case R.id.log_out:
             {
+
                 FirebaseAuth.getInstance().signOut();
                 LoginManager.getInstance().logOut();
                 getActivity().finish();

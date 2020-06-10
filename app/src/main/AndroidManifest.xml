@@ -30,7 +30,8 @@
             </intent-filter>
         </activity>
         <!-- Sign Up screen -->
-        <activity android:name=".signUp">
+        <activity android:name=".signUp"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name=".signUp" />
 
