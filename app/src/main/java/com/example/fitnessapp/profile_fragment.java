@@ -26,6 +26,7 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
     private View view;
     private FirebaseAuth mAuth;
     private TextView logout;
+    private TextView helpclick;
     public profile_fragment()
     {
 
@@ -37,9 +38,10 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.profile_fragment,container,false);
         mAuth = FirebaseAuth.getInstance();
         logout = (TextView)view.findViewById(R.id.log_out);
+        helpclick= (TextView)view.findViewById(R.id.help);
 
         logout.setOnClickListener(this);
-
+        helpclick.setOnClickListener(this);
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
         {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -89,6 +91,13 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(getActivity(), "User logged out", Toast.LENGTH_SHORT).show();
                 Intent returnLogin = new Intent(getActivity(), MainActivity.class);
                 startActivity(returnLogin);
+                break;
+            }
+            case R.id.help:
+            {
+                Intent goToHelp = new Intent(getActivity(), IntroActivity.class);
+                goToHelp.putExtra("Helper",true);
+                startActivity(goToHelp);
                 break;
             }
         }

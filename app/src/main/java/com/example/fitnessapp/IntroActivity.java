@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -30,22 +31,28 @@ public class IntroActivity extends AppCompatActivity {
     Button btnGetStarted;
     Animation btnAnim ;
     TextView tvSkip;
-
+    Boolean fromHelper=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         // make the activity on full screen
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Intent intent= getIntent();
+
+        if(intent.getBooleanExtra("Helper",false))
+        {
 
 
-        // when this activity is about to be launch we need to check if its openened before or not
-
-        if (restorePrefData()) {
+            fromHelper=true;
+        }
+        intent.putExtra("Helper",false);
+         if (restorePrefData()&&!fromHelper) {
 
 
             Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class );
@@ -150,13 +157,14 @@ public class IntroActivity extends AppCompatActivity {
 
 
                 //open main activity
-
-                Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(mainActivity);
-                // also we need to save a boolean value to storage so next time when the user run the app
-                // we could know that he is already checked the intro screen activity
-                // i'm going to use shared preferences to that process
-                savePrefsData();
+                if(!fromHelper) {
+                    Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(mainActivity);
+                    // also we need to save a boolean value to storage so next time when the user run the app
+                    // we could know that he is already checked the intro screen activity
+                    // i'm going to use shared preferences to that process
+                    savePrefsData();
+                }
                 finish();
 
 
@@ -197,6 +205,7 @@ public class IntroActivity extends AppCompatActivity {
 
 
     }
+
 
     // show the GETSTARTED Button and hide the indicator and the next button
     private void loaddLastScreen() {
