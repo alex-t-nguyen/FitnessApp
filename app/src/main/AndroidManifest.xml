@@ -42,6 +42,7 @@
             </intent-filter>
         </activity>
 
+        <!-- Timer/Stopwatch Activity -->
         <activity
             android:name=".timer_stopwatch"
             android:label="@string/title_activity_timer_stopwatch"
@@ -55,7 +56,7 @@
         </activity>
 
         <!-- On-boarding Screen -->
-        <activity android:name=".IntroActivtiy"
+        <activity android:name=".IntroActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -73,7 +74,9 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity> <!-- Home Screen -->
+        </activity>
+
+        <!-- Home Screen -->
         <activity
             android:name=".Home"
             android:theme="@style/AppTheme.NoActionBar">
@@ -82,7 +85,9 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity> <!-- Workout Tab -->
+        </activity>
+
+        <!-- Workout Tab -->
         <activity
             android:name=".workouts"
             android:parentActivityName=".Home"
@@ -93,6 +98,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <!-- Login Screen (MAIN ACTIVITY) -->
         <activity
             android:name=".MainActivity">

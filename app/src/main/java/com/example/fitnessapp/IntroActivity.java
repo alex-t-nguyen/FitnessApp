@@ -65,7 +65,6 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
 
         // hide the action bar
-
         getSupportActionBar().hide();
 
         // ini views
