@@ -61,6 +61,7 @@
             style="@style/viewParent.headerText.settingsMiniTitle"
             android:text="Profile"/>
         <TextView
+            android:id="@+id/edit_profile"
             style = "@style/viewParent.headerText.settingsTextIcon"
             android:drawableLeft="@drawable/ic_edit_profile"
             android:text="Edit Profile"/>

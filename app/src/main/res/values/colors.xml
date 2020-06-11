@@ -55,4 +55,8 @@
     <color name="colorControlNormal">#ccffffff</color>
     <color name="popUpText">#94FFFFFF</color>
 
+    // Edit Profile Menu Colors
+    <color name="bannerMain">#FFC107</color>
+    <color name="bannerSecond">#FFA000</color>
+    <color name="bannerThird">#FF4081</color>
 </resources>

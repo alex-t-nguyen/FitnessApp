@@ -8,29 +8,57 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".workoutTemplate"
-            android:theme="@style/Toolbar"
-            android:parentActivityName=".workouts">
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".logoutAuthenticate">
+            <intent-filter>
+                <action android:name=".workoutTemplate" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
+        <!-- Profile Fragment edit menu -->
+        <activity
+            android:name=".profileFragmentTabs.editProfile"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name=".profileFragmentTabs.editProfile" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".workoutTemplate"
+            android:parentActivityName=".workouts"
+            android:theme="@style/Toolbar">
+            <intent-filter>
+                <action android:name=".workoutTemplate" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity> <!-- timer/stopwatch -->
         <activity
             android:name=".timer_stopwatch"
             android:label="@string/title_activity_timer_stopwatch"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name=".timer_stopwatch" />
 
-        </activity> <!-- Log In Screen -->
-        <activity android:name=".MainActivity"
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- Log In Screen -->
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- Sign Up screen -->
-        <activity android:name=".signUp"
+        </activity> <!-- Sign Up screen -->
+        <activity
+            android:name=".signUp"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name=".signUp" />
@@ -38,7 +66,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity> <!-- Home Screen -->
-        <activity android:name=".Home"
+        <activity
+            android:name=".Home"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name=".Home" />

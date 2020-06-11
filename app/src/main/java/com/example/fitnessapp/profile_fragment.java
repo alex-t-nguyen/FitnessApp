@@ -3,6 +3,7 @@ package com.example.fitnessapp;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
+import com.example.fitnessapp.profileFragmentTabs.editProfile;
+import com.example.fitnessapp.profileFragmentTabs.logoutDialog;
 import com.facebook.login.Login;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,8 +30,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import org.w3c.dom.Text;
 
 public class profile_fragment extends Fragment implements View.OnClickListener {
+    private final static String TAG = "profileFragment";
     private View view;
-    private TextView logout;
+    private TextView logout, editprofilebtn;
     private Dialog popup_logout;
 
     public profile_fragment()
@@ -40,7 +45,9 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.profile_fragment,container,false);
         logout = (TextView)view.findViewById(R.id.log_out);
+        editprofilebtn = (TextView)view.findViewById(R.id.edit_profile);
 
+        editprofilebtn.setOnClickListener(this);
         logout.setOnClickListener(this);
 
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
@@ -90,15 +97,31 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
     {
         switch(view.getId())
         {
+            case R.id.edit_profile:
+            {
+                Log.d(TAG, "Clicked edit profile");
+                Intent editProfileMenuIntent = new Intent(getActivity(), editProfile.class);
+                startActivity(editProfileMenuIntent);
+                break;
+            }
             case R.id.log_out:
             {
-
+                /*
+                    Because getActivity of fragment returns the activity hosting the fragment (Home.java), we have Home.java implement
+                    the logoutDialog.java method to log the user out, rather than this fragment.
+                    getActivity() returns Home.java, so need to implement the method from there
+                 */
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                logoutDialog logDialog = new logoutDialog();
+                logDialog.show(fragmentManager, "Logout");
+                /*
                 FirebaseAuth.getInstance().signOut();
                 LoginManager.getInstance().logOut();
                 getActivity().finish();
                 Toast.makeText(getActivity(), "User logged out", Toast.LENGTH_SHORT).show();
                 Intent returnLogin = new Intent(getActivity(), MainActivity.class);
                 startActivity(returnLogin);
+                 */
                 break;
             }
         }

@@ -231,6 +231,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else
                 {
+                    Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
