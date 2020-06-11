@@ -26,7 +26,7 @@ import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class signUp extends AppCompatActivity implements View.OnClickListener {
+public class  signUp extends AppCompatActivity implements View.OnClickListener {
     EditText EditTextEmail, EditTextPassword;
     private FirebaseAuth mAuth;
     private Button btnSignUp;

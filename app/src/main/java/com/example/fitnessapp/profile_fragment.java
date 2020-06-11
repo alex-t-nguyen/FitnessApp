@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,8 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.fitnessapp.profileFragmentTabs.editProfile;
 import com.example.fitnessapp.profileFragmentTabs.logoutDialog;
@@ -32,9 +31,10 @@ import org.w3c.dom.Text;
 public class profile_fragment extends Fragment implements View.OnClickListener {
     private final static String TAG = "profileFragment";
     private View view;
+    private FirebaseAuth mAuth;
     private TextView logout, editprofilebtn;
+    private TextView helpclick;
     private Dialog popup_logout;
-
     public profile_fragment()
     {
 
@@ -44,11 +44,14 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.profile_fragment,container,false);
+        mAuth = FirebaseAuth.getInstance();
         logout = (TextView)view.findViewById(R.id.log_out);
         editprofilebtn = (TextView)view.findViewById(R.id.edit_profile);
+        helpclick= (TextView)view.findViewById(R.id.help);
 
         editprofilebtn.setOnClickListener(this);
         logout.setOnClickListener(this);
+        helpclick.setOnClickListener(this);
 
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
         {
@@ -77,16 +80,12 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
                 {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.viewpager, new profile_fragment()).commit();
-                    //container.setBackgroundColor(getResources().getColor(R.color.black));
-                    //container.setBackgroundResource(R.drawable.card_bg_dark);
 
                 }
                 else
                 {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.viewpager, new profile_fragment()).commit();
-                    //container.setBackgroundColor(getResources().getColor(R.color.white));
-                    //container.setBackgroundResource(R.drawable.card_bg);
                 }
             }
         });
@@ -122,6 +121,13 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
                 Intent returnLogin = new Intent(getActivity(), MainActivity.class);
                 startActivity(returnLogin);
                  */
+                break;
+            }
+            case R.id.help:
+            {
+                Intent goToHelp = new Intent(getActivity(), IntroActivity.class);
+                goToHelp.putExtra("Helper",true);
+                startActivity(goToHelp);
                 break;
             }
         }
