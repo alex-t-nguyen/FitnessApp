@@ -1,19 +1,25 @@
 package com.example.fitnessapp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.fitnessapp.profileFragmentTabs.logoutDialog;
+import com.facebook.login.LoginManager;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements logoutDialog.Communicator {
 
     private TabLayout tabLayout;
     private AppBarLayout appBarLayout;
@@ -28,8 +34,8 @@ public class Home extends AppCompatActivity {
         appBarLayout = (AppBarLayout)findViewById(R.id.appBar);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager());
-        // Adding Fragments
 
+        // Adding Fragments
         adapter.addFragment(new menu_fragment(),"Menu");
         adapter.addFragment(new geolocation_fragment(),"Map");
         adapter.addFragment(new profile_fragment(),"Profile");
@@ -44,5 +50,15 @@ public class Home extends AppCompatActivity {
         String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
         TextView date = findViewById(R.id.calendarDate);
         date.setText(date_n);
+    }
+
+    @Override
+    public void onDialogLogout(String message) {
+        FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
+        this.finish();
+        Toast.makeText(this, "User logged out", Toast.LENGTH_SHORT).show();
+        Intent returnLogin = new Intent(this, MainActivity.class);
+        startActivity(returnLogin);
     }
 }

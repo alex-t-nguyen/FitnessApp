@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -18,6 +19,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.fitnessapp.listanimate.CustomItemAnimator;
 import com.example.fitnessapp.workoutCategory.Exercise;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +37,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class workoutTemplate extends AppCompatActivity {
 
@@ -48,6 +53,7 @@ public class workoutTemplate extends AppCompatActivity {
     ProgressBar popupClickProgress;
 
     private workoutTemplate_listAdapter adapter;
+    private RecyclerView recyclerView;
 
     // Firebase variables
     private FirebaseDatabase database;
@@ -86,12 +92,18 @@ public class workoutTemplate extends AppCompatActivity {
         //initRecyclerView();
 
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
 
         adapter = new workoutTemplate_listAdapter(mExercises, /*mDescriptions,*/getApplicationContext());
-        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+
+        //new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
+
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -99,7 +111,7 @@ public class workoutTemplate extends AppCompatActivity {
         recyclerView.setItemAnimator(new CustomItemAnimator());
 
 
-
+        // Fetch data from database to reload exercises
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -110,7 +122,7 @@ public class workoutTemplate extends AppCompatActivity {
                     Exercise exercise = snapshot.getValue(Exercise.class);
                     mExercises.add(exercise);
 
-                    Log.d(TAG, "Name: " + exercise.getName());
+                    Log.d(TAG, "OnCreate Name: " + exercise.getName());
 
                     adapter.notifyDataSetChanged();
                 }
@@ -122,6 +134,8 @@ public class workoutTemplate extends AppCompatActivity {
             }
         });
 
+        //saveExercisesInDatabase();
+        //Log.d(TAG, "after saving data");
         /*
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -169,26 +183,32 @@ public class workoutTemplate extends AppCompatActivity {
         */
     }
 
+    private void saveExercisesInDatabase() {
+        myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(workoutGroup).child(workoutKey);
+        myRef.removeValue();
+        myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(workoutGroup);
+        for (Exercise ex : mExercises)
+        {
+            myRef.child(workoutKey).push().setValue(ex);
+        }
+        myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(workoutGroup).child(workoutKey);
+        Log.d(TAG, "saveExercises");
+    }
+    /*
     private void initRecyclerView() {
-        /*
-        mExercises.add("Bench Press");
-        mDescriptions.add("4" + " x " + "6-8");
 
-        mExercises.add("Cable Fly");
-        mDescriptions.add("4" + " x " + "12-15");
-        */
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
 
-        adapter = new workoutTemplate_listAdapter(mExercises, /*mDescriptions,*/getApplicationContext());
+        adapter = new workoutTemplate_listAdapter(mExercises, /*mDescriptions, getApplicationContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Setup custom item animator
         recyclerView.setItemAnimator(new CustomItemAnimator());
     }
-
+    */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -198,17 +218,23 @@ public class workoutTemplate extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         switch(item.getItemId())
         {
             case R.id.add_exercise:
-                Toast.makeText(this, "Add Exercise", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Add Exercise", Toast.LENGTH_SHORT).show();
                 popAddExercise.show();
+                imm.showSoftInput(this.getCurrentFocus(), InputMethodManager.SHOW_FORCED);
                 break;
             case R.id.add_rest:
-                Toast.makeText(this, "Add Rest", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Add Rest", Toast.LENGTH_SHORT).show();
                 popAddRest.show();
+
+                imm.showSoftInput(this.getCurrentFocus(), InputMethodManager.SHOW_FORCED);
+                break;
             case R.id.edit:
-                Toast.makeText(this, "Edit Exercises", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Save Edits", Toast.LENGTH_SHORT).show();
+                saveExercisesInDatabase();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -233,6 +259,7 @@ public class workoutTemplate extends AppCompatActivity {
         popupAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 popupAddBtn.setVisibility(View.INVISIBLE);
                 popupClickProgress.setVisibility(View.VISIBLE);
                 Exercise exercise = new Exercise(popupTitle.getText().toString(), popupSets.getText().toString(), popupReps.getText().toString(), "");
@@ -249,6 +276,15 @@ public class workoutTemplate extends AppCompatActivity {
                 popupClickProgress.setVisibility(View.INVISIBLE);
                 popAddExercise.dismiss();
                 popupAddBtn.setVisibility(View.VISIBLE);
+                myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(workoutGroup).child(workoutKey);
+
+                popupTitle.setText(null);
+                popupSets.setText(null);
+                popupReps.setText(null);
+
+                popupTitle.setFocusableInTouchMode(true);
+                popupTitle.setFocusable(true);
+                popupTitle.requestFocus();
             }
         });
     }
@@ -276,6 +312,7 @@ public class workoutTemplate extends AppCompatActivity {
         popupAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 popupAddBtn.setVisibility(View.INVISIBLE);
                 popupClickProgress.setVisibility(View.VISIBLE);
                 Exercise exercise = new Exercise();
@@ -291,13 +328,22 @@ public class workoutTemplate extends AppCompatActivity {
                 popupClickProgress.setVisibility(View.INVISIBLE);
                 popAddRest.dismiss();
                 popupAddBtn.setVisibility(View.VISIBLE);
+                myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(workoutGroup).child(workoutKey);
+
+                popupTime.setText(null);
             }
         });
     }
 
-    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            int fromPosition = viewHolder.getAdapterPosition();
+            int toPosition = target.getAdapterPosition();
+            Collections.swap(mExercises, fromPosition, toPosition);
+            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
             return false;
         }
 
@@ -310,10 +356,15 @@ public class workoutTemplate extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren())
                     {
-                        Exercise exercise = snapshot.getValue(Exercise.class);
-                        if(exercise.getName().equals(mExercises.get(viewHolder.getAdapterPosition()).getName()))
+                        // Exercise exercise = snapshot.getValue(Exercise.class);
+                        String name = snapshot.child("name").getValue(String.class);
+                        if(name == null)
+                            Log.d(TAG, "name variable is null");
+                        else if (mExercises.get(viewHolder.getAdapterPosition()).getName() == null)
+                            Log.d(TAG, "exercise name is null");
+                        if(name.equals(mExercises.get(viewHolder.getAdapterPosition()).getName()))
                             myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(workoutGroup).child(workoutKey).child(snapshot.getKey());
-                        //Log.d(TAG, "Name: " + exercise.getName());
+                        Log.d(TAG, "OnSwiped Name: " + name);
 
                     }
                     myRef.removeValue();
@@ -330,4 +381,5 @@ public class workoutTemplate extends AppCompatActivity {
             });
         }
     };
+
 }

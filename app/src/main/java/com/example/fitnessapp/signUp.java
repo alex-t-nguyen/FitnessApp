@@ -23,13 +23,17 @@ import com.google.firebase.auth.FirebaseUser;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class signUp extends AppCompatActivity implements View.OnClickListener {
+public class  signUp extends AppCompatActivity implements View.OnClickListener {
     EditText EditTextEmail, EditTextPassword;
     private FirebaseAuth mAuth;
     private Button btnSignUp;
     private TextView login;
     private ProgressBar progressBar;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
 
     private static final String TAG = "EmailPassword";
 
@@ -42,7 +46,10 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
         btnSignUp = (Button)findViewById(R.id.btn_signup);  // sign up button (main activity page)
         login = (TextView)findViewById(R.id.log_in);    // login link (sign up page)
         progressBar = (ProgressBar)findViewById(R.id.progressbar);
+
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
 
         btnSignUp.setOnClickListener(this);
         login.setOnClickListener(this);
@@ -52,7 +59,7 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
     private void registerUser()
     {
 
-        String email = EditTextEmail.getText().toString().trim();
+        final String email = EditTextEmail.getText().toString().trim();
         String password = EditTextPassword.getText().toString().trim();
 
         if(email.isEmpty())
@@ -93,11 +100,15 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(signUp.this, "Authentication successful.",
                                     Toast.LENGTH_SHORT).show();
-                            //Intent returnLogin = new Intent(".MainActivity");
-                            //startActivity(returnLogin);
-
-                        } else {
-                            // If sign in fails, display a message to the user.
+                            Intent openApp = new Intent(".Home");
+                            startActivity(openApp);
+                            // Add user to database
+                            User signedInUser = new User(email);
+                            myRef = database.getReference("Users"); // Get reference in database (Users path)
+                            myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(signedInUser);
+                        } else
+                            {
+                            // If sign up fails, display a message to the user.
                             progressBar.setVisibility(View.GONE);
                             if(task.getException() instanceof FirebaseAuthUserCollisionException)    // If user already exists
                             {
@@ -126,9 +137,10 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
                 startActivity(returnLogin);
                 break;
             }
-            case R.id.btn_signup:   // registerUser function is being called successfully
+            case R.id.btn_signup:   // registerUser function
             {
                 registerUser();
+
                 break;
             }
         }

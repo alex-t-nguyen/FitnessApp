@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     android:background="#ECEFF1"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -15,51 +16,55 @@
         android:textColorHint="@color/login_form_details_light"
         android:inputType="number"
         android:maxLength="2"/>
-        <Spinner
-            android:id="@+id/spinner_selectUnit"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/edit_text_input"
-            android:layout_centerHorizontal="true"/>
-        <LinearLayout
+    <Spinner
+        android:id="@+id/spinner_selectUnit"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/edit_text_input"
+        android:layout_centerHorizontal="true"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:layout_below="@+id/spinner_selectUnit">
+        <Button
+            android:id="@+id/button_set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal"
-            android:layout_below="@+id/spinner_selectUnit">
-            <Button
-                android:id="@+id/button_set"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Set"/>
-            <Button
-                android:id="@+id/button_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add"/>
+            android:text="Set"/>
+        <Button
+            android:id="@+id/button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"/>
     </LinearLayout>
     <TextView
         android:id="@+id/text_view_countdown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_alignParentTop="true"
         android:text="00:00:00"
         android:textSize="40sp"
         android:textStyle="bold"/>
+
     <Button
         android:id="@+id/button_startPause"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="200dp"
         android:text="Start"
-        android:textColor="@color/add_menu"/>
+        android:textColor="@color/add_menu" />
 
     <Button
         android:id="@+id/button_reset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/button_startPause"
+        android:layout_marginTop="40dp"
         android:text="Reset"
         android:visibility="invisible"
         tools:visibility="visible" />

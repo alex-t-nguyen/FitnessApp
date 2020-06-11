@@ -8,6 +8,20 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="android:textColorHint">@color/login_form_details</item>
+        <item name="cardBackgroundColor">@color/popUpText</item>
+        <item name="android:textColor">#808080</item>
+        <item name="buttonTint">#2196F3</item>
+    </style>
+
+    <style name="darktheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#212121</item>
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundColor">#303030</item>
+        <item name="cardBackgroundColor">#424242</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="buttonTint">#2196F3</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
     <style name="viewParent">
@@ -67,6 +81,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/dark_blue</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="WhiteToolBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
 </resources>

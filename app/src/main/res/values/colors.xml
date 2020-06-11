@@ -38,6 +38,10 @@
     <color name="dietCard">#64B990</color>
     <color name="timerStopwatchCard">#03A9F4</color>
 
+    <color name="card_bg_color_light">#f6f6f6</color>
+    <color name="card_bg_color_dark">#0e0e0e</color>
+    <color name="black">#0e0e0e</color>
+
     // Menu add button
     <color name="add_menu">#4CAF50</color>
     <color name="clear_menu">#2196F3</color>
@@ -50,5 +54,22 @@
     <color name="popUpBackground">#2f333f</color>
     <color name="colorControlNormal">#ccffffff</color>
     <color name="popUpText">#94FFFFFF</color>
+
+    // Edit Profile Menu Colors
+    <color name="bannerMain">#FFC107</color>
+    <color name="bannerSecond">#FFA000</color>
+    <color name="bannerThird">#FF4081</color>
+
+    <!-- colors for button style -->
+
+    <color name="gradient_start_color">#4c84ff</color>
+    <color name="gradient_end_color">#18a3fe</color>
+
+
+    <!-- colors for tab and screen text -->
+
+    <color name="tab_indicator_gray">#c0c0c0</color>
+    <color name="intro_title_color">#000000</color>
+    <color name="intro_description_color">#656565</color>
 
 </resources>
