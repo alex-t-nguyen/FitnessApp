@@ -77,7 +77,8 @@
         </activity> <!-- Workout Tab -->
         <activity
             android:name=".workouts"
-            android:parentActivityName=".Home">
+            android:parentActivityName=".Home"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name=".workouts" />
 
