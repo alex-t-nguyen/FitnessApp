@@ -106,7 +106,8 @@ public class signUp extends AppCompatActivity implements View.OnClickListener {
                             User signedInUser = new User(email);
                             myRef = database.getReference("Users"); // Get reference in database (Users path)
                             myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(signedInUser);
-                        } else {
+                        } else
+                            {
                             // If sign up fails, display a message to the user.
                             progressBar.setVisibility(View.GONE);
                             if(task.getException() instanceof FirebaseAuthUserCollisionException)    // If user already exists
