@@ -1,4 +1,4 @@
-package com.example.fitnessapp;
+package com.example.fitnessapp.workoutCategory;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
+import com.example.fitnessapp.R;
 
 import org.w3c.dom.Text;
 

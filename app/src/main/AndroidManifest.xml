@@ -9,29 +9,25 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-
-        <!-- Logout Authentication activity-->
-        <activity android:name=".logoutAuthenticate">
+        <activity android:name=".profileFragmentTabs.editEmail.changeEmail"></activity>
+        <activity android:name=".profileFragmentTabs.editEmail.change_email_authenticate" /> <!-- Logout Authentication activity -->
+        <activity android:name=".profileFragmentTabs.DeleteAccount.deleteAuthenticate">
             <intent-filter>
                 <action android:name=".workoutTemplate" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-
-        <!-- Workout template activity (Exercises)-->
+        </activity> <!-- Workout template activity (Exercises) -->
         <activity
-            android:name=".workoutTemplate"
-            android:parentActivityName=".workouts"
+            android:name=".workoutCategory.workoutTemplate"
+            android:parentActivityName=".workoutCategory.workouts"
             android:theme="@style/Toolbar">
             <intent-filter>
                 <action android:name=".workoutTemplate" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-
-        <!-- Profile Fragment edit menu -->
+        </activity> <!-- Profile Fragment edit menu -->
         <activity
             android:name=".profileFragmentTabs.editProfile"
             android:theme="@style/AppTheme.NoActionBar">
@@ -40,11 +36,9 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-
-        <!-- Timer/Stopwatch Activity -->
+        </activity> <!-- Timer/Stopwatch Activity -->
         <activity
-            android:name=".timer_stopwatch"
+            android:name=".Clock.timer_stopwatch"
             android:label="@string/title_activity_timer_stopwatch"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
@@ -53,57 +47,46 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-
-        <!-- On-boarding Screen -->
-        <activity android:name=".IntroActivity"
+        </activity> <!-- On-boarding Screen -->
+        <activity
+            android:name=".Introduction.IntroActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Sign Up screen -->
+        </activity> <!-- Sign Up screen -->
         <activity
-            android:name=".signUp"
+            android:name=".Login.signUp"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name=".signUp" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-
-        <!-- Home Screen -->
+        </activity> <!-- Home Screen -->
         <activity
-            android:name=".Home"
+            android:name=".homeFragments.Home"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name=".Home" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-
-        <!-- Workout Tab -->
+        </activity> <!-- Workout Tab -->
         <activity
-            android:name=".workouts"
-            android:parentActivityName=".Home"
+            android:name=".workoutCategory.workouts"
+            android:parentActivityName=".homeFragments.Home"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name=".workouts" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-
-        <!-- Login Screen (MAIN ACTIVITY) -->
-        <activity
-            android:name=".MainActivity">
+        </activity> <!-- Login Screen (MAIN ACTIVITY) -->
+        <activity android:name=".Login.MainActivity">
             <intent-filter>
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

@@ -1,4 +1,4 @@
-package com.example.fitnessapp;
+package com.example.fitnessapp.Clock;
 
 import android.content.Context;
 import android.os.AsyncTask;

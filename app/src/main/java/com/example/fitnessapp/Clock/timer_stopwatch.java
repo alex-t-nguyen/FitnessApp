@@ -1,9 +1,9 @@
-package com.example.fitnessapp;
+package com.example.fitnessapp.Clock;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.widget.TextView;
 
+import com.example.fitnessapp.R;
+import com.example.fitnessapp.ViewPageAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.viewpager.widget.ViewPager;

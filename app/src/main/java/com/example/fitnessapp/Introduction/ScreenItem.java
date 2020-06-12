@@ -1,4 +1,4 @@
-package com.example.fitnessapp;
+package com.example.fitnessapp.Introduction;
 
 public class ScreenItem {
 

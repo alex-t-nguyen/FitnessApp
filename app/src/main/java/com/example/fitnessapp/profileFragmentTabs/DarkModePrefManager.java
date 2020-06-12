@@ -1,4 +1,4 @@
-package com.example.fitnessapp;
+package com.example.fitnessapp.profileFragmentTabs;
 
 import android.content.Context;
 import android.content.SharedPreferences;

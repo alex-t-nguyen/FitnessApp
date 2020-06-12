@@ -1,4 +1,4 @@
-package com.example.fitnessapp;
+package com.example.fitnessapp.workoutCategory;
 
 import android.content.Context;
 import android.nfc.Tag;
@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fitnessapp.R;
 import com.example.fitnessapp.workoutCategory.Exercise;
 
 import java.util.ArrayList;

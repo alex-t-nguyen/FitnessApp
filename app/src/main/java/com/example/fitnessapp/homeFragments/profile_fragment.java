@@ -1,4 +1,4 @@
-package com.example.fitnessapp;
+package com.example.fitnessapp.homeFragments;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -10,23 +10,17 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentActivity;
 
+import com.example.fitnessapp.Introduction.IntroActivity;
+import com.example.fitnessapp.R;
 import com.example.fitnessapp.profileFragmentTabs.editProfile;
 import com.example.fitnessapp.profileFragmentTabs.logoutDialog;
-import com.facebook.login.Login;
-import com.facebook.login.LoginManager;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
-
-import org.w3c.dom.Text;
 
 public class profile_fragment extends Fragment implements View.OnClickListener {
     private final static String TAG = "profileFragment";

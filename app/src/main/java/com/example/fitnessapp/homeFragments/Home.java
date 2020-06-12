@@ -1,6 +1,5 @@
-package com.example.fitnessapp;
+package com.example.fitnessapp.homeFragments;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -9,6 +8,9 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fitnessapp.Login.MainActivity;
+import com.example.fitnessapp.R;
+import com.example.fitnessapp.ViewPageAdapter;
 import com.example.fitnessapp.profileFragmentTabs.logoutDialog;
 import com.facebook.login.LoginManager;
 import com.google.android.material.appbar.AppBarLayout;
@@ -55,7 +57,7 @@ public class Home extends AppCompatActivity implements logoutDialog.Communicator
     @Override
     public void onDialogLogout(String message) {
         FirebaseAuth.getInstance().signOut();
-        LoginManager.getInstance().logOut();
+        LoginManager.getInstance().logOut(); // Logout of facebook to change button on login-screen
         this.finish();
         Toast.makeText(this, "User logged out", Toast.LENGTH_SHORT).show();
         Intent returnLogin = new Intent(this, MainActivity.class);

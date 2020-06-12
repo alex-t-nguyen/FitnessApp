@@ -1,25 +1,23 @@
-package com.example.fitnessapp;
+package com.example.fitnessapp.Login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.fitnessapp.R;
+import com.example.fitnessapp.homeFragments.Home;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -32,17 +30,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -59,7 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-    private String userID;
+
+    private ProgressBar progressBar;
 
     private Dialog popupForgotPass;
 
@@ -82,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fbLogin = (LoginButton)findViewById(R.id.facebook_login);
         fbLogin.setPermissions("email", "public_profile");
         mCallbackManager = CallbackManager.Factory.create();
+
+        progressBar = (ProgressBar)findViewById(R.id.progressbar);
 
         fbLogin.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         Log.d(TAG, "handleFacebookToken" + token);
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        progressBar.setVisibility(View.VISIBLE);
         mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -142,6 +143,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     Log.d(TAG, "Facebook sign-in successful");
                     FirebaseUser user = mAuth.getCurrentUser();
+                    database = FirebaseDatabase.getInstance();
+                    myRef = database.getReference("Users"); // Get reference in database (Users path)
+                    try {
+                        for (UserInfo userInfo : user.getProviderData()) {
+                            if (userInfo.getEmail() != null) {
+                                myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(new User(userInfo.getEmail()));
+                                break;
+                            }
+                        }
+                    }
+                    catch (NullPointerException ex)
+                    {
+                        Log.d(TAG, "NullPointerException: " + ex.getMessage());
+                    }
                     updateUI(user);
                 }
                 else
@@ -165,9 +180,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent homeIntent;
         if(user != null) {
             Toast.makeText(MainActivity.this, "User logged In", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
             homeIntent = new Intent(MainActivity.this, Home.class);
             startActivity(homeIntent);
             finish();
+        }
+        else
+        {
+            Log.d(TAG, "user is null");
+            progressBar.setVisibility(View.GONE);
         }
     }
 
@@ -221,12 +242,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
+                    progressBar.setVisibility(View.VISIBLE);
                     Intent homeActivity = new Intent(getApplicationContext(), Home.class);
                     getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   // Clear all tasks on top of task (prevent hitting back button to go back to login)
                     User user = new User(email);
                     database = FirebaseDatabase.getInstance();
                     myRef = database.getReference("Users"); // Get reference in database (Users path)
                     myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);   // Assign user id in User path, then user's email to the ID
+                    progressBar.setVisibility(View.GONE);
                     startActivity(homeActivity);
                 }
                 else
