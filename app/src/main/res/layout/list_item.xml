@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F9F6F4">
+    android:background="?attr/workoutItem">
 
     <TextView
         android:id="@+id/list_item"
@@ -12,7 +12,7 @@
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:textColor="#C3002F"
+        android:textColor="?attr/workoutItemTextColor"
         android:textSize="16sp" />
 
 </LinearLayout>

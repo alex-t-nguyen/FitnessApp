@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Exercise"
+        android:textColor="#000000"
+        android:textColorHint="?attr/textcolorhint"
         android:inputType="textCapSentences"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,26 +21,30 @@
 
     <EditText
         android:background="@drawable/popup_edittext_style"
-        android:id="@+id/popupSets"
+        android:id="@+id/popupReps"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Sets"
+        android:hint="Reps"
+        android:textColor="#000000"
+        android:textColorHint="?attr/textcolorhint"
         android:inputType="textCapSentences"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/popupTitle"/>
     <EditText
         android:background="@drawable/popup_edittext_style"
-        android:id="@+id/popupReps"
+        android:id="@+id/popupWeight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Reps"
+        android:hint="Weight (lb)"
+        android:textColor="#000000"
+        android:textColorHint="?attr/textcolorhint"
         android:inputType="textCapSentences"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/popupSets"/>
+        app:layout_constraintTop_toBottomOf="@id/popupReps"/>
 
     <ImageView
         android:background="#2d2d2d"
@@ -49,7 +55,7 @@
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/popupReps"
+        app:layout_constraintTop_toBottomOf="@+id/popupWeight"
         tools:srcCompat="@tools:sample/backgrounds/scenic"/>
 
     <androidx.appcompat.widget.AppCompatImageView

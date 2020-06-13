@@ -3,6 +3,7 @@ package com.example.fitnessapp.workoutCategory;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fitnessapp.R;
+import com.example.fitnessapp.profileFragmentTabs.DarkModePrefManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -58,6 +60,7 @@ public class workouts extends AppCompatActivity {
     private boolean categorySelected;
     private boolean itemSelected;
     List<String> tempHeaderListItems;
+    private DarkModePrefManager darkModePrefManager;
 
     // Firebase Database variables
     private FirebaseDatabase database;
@@ -71,6 +74,15 @@ public class workouts extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        darkModePrefManager = new DarkModePrefManager(this);
+        if (darkModePrefManager.loadDarkModeState())
+        {
+            this.setTheme(R.style.darktheme);
+        }
+        else
+            this.setTheme(R.style.AppTheme);
+
         setContentView(R.layout.activity_workouts);
 
         DrawerLayout mDrawerLayout = findViewById(R.id.drawer);
@@ -95,11 +107,13 @@ public class workouts extends AppCompatActivity {
         myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid());  // Gets current user ID to add to their specific workout lists
 
         // initializeData();
+        /*
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listHashMap.clear();
                 listHeader.clear();
+                Log.d(TAG, "Group change called");
 
                 for (final DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
@@ -112,7 +126,7 @@ public class workouts extends AppCompatActivity {
                             {
                                 items.add(snapshot1.getKey());
                             }
-                            //Log.d(TAG, "Header Size: " + listHeader.size());
+                            Log.d(TAG, "Header Size: " + listHeader.size());
 
                             listHeader.add(snapshot.getKey());
                             listHashMap.put(listHeader.get(listHeader.size() - 1), items);
@@ -135,6 +149,7 @@ public class workouts extends AppCompatActivity {
 
             }
         });
+         */
         // Get list of workouts data from database and load onto screen
         /*
         myRef.addValueEventListener(new ValueEventListener() {
@@ -820,6 +835,62 @@ public class workouts extends AppCompatActivity {
             selectedTextView.setText(error);
             spinner.requestFocus();
         }
+    }
+
+    @Override
+    protected void onResume()
+    {
+        listHashMap.clear();
+        listHeader.clear();
+        listAdapter.notifyDataSetChanged();
+        super.onResume();
+
+        // Firebase Database
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid());  // Gets current user ID to add to their specific workout lists
+
+        // initializeData();
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listHashMap.clear();
+                listHeader.clear();
+                Log.d(TAG, "Group change called");
+
+                for (final DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    final DatabaseReference childReference = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey());
+                    childReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final ArrayList<String> items = new ArrayList<>();
+                            for (DataSnapshot snapshot1 : dataSnapshot.getChildren())
+                            {
+                                items.add(snapshot1.getKey());
+                            }
+                            Log.d(TAG, "Header Size: " + listHeader.size());
+
+                            listHeader.add(snapshot.getKey());
+                            listHashMap.put(listHeader.get(listHeader.size() - 1), items);
+                            //listAdapter = new expandableListAdapter(getApplicationContext(), listHeader, listHashMap);
+                            //listView.setAdapter(listAdapter);
+                            listAdapter.notifyDataSetChanged();
+                            childReference.removeEventListener(this);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }

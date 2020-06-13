@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="160dp"
     android:orientation="vertical"
-    android:background="@drawable/side_nav_bar"
+    android:background="@drawable/bg_login"
     android:padding="20dp">
 
     <ImageView

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".homeFragments.Home"
     android:orientation="vertical"
-    android:background="@color/contentBodyColor">
+    android:background="?attr/backgroundcolor">
 
 
     <com.google.android.material.appbar.AppBarLayout

@@ -6,29 +6,24 @@ import android.content.SharedPreferences;
 public class DarkModePrefManager {
 
     SharedPreferences pref;
-    SharedPreferences.Editor editor;
-    Context context;
-
-    private static final int PRIVATE_MODE = 0;
-    private static final String PREF_NAME = "dark-mode";
-    private static final String IS_NIGHT_MODE = "isNightMode";
 
     public DarkModePrefManager(Context c)
     {
-        context = c;
-        pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        editor = pref.edit();
+        pref = c.getSharedPreferences("filename", Context.MODE_PRIVATE);
     }
 
-    public void setDarkMode(boolean isFirstTime)
+    // This method saves the dark mode state : True or False
+    public void setDarkMode(Boolean state)
     {
-        editor.putBoolean(IS_NIGHT_MODE, isFirstTime);
-        editor.commit();
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("NightMode", state);
+        editor.apply();
     }
 
-    public boolean isNightMode()
+    // This method will load the dark mode state
+    public Boolean loadDarkModeState()
     {
-        return pref.getBoolean(IS_NIGHT_MODE, true);
+        return pref.getBoolean("NightMode", false);
     }
 
 }

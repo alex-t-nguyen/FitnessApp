@@ -1,16 +1,20 @@
 package com.example.fitnessapp.homeFragments;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fitnessapp.Login.MainActivity;
 import com.example.fitnessapp.R;
 import com.example.fitnessapp.ViewPageAdapter;
+import com.example.fitnessapp.profileFragmentTabs.DarkModePrefManager;
 import com.example.fitnessapp.profileFragmentTabs.logoutDialog;
 import com.facebook.login.LoginManager;
 import com.google.android.material.appbar.AppBarLayout;
@@ -23,13 +27,24 @@ import java.util.Locale;
 
 public class Home extends AppCompatActivity implements logoutDialog.Communicator {
 
+    private static final String TAG = "HOME";
     private TabLayout tabLayout;
     private AppBarLayout appBarLayout;
     private ViewPager viewPager;
+    private DarkModePrefManager darkModePrefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        darkModePrefManager = new DarkModePrefManager(this);
+        if (darkModePrefManager.loadDarkModeState())
+        {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         setContentView(R.layout.activity_home);
         calendarDate();
         tabLayout = (TabLayout) findViewById(R.id.navbar);
@@ -44,6 +59,7 @@ public class Home extends AppCompatActivity implements logoutDialog.Communicator
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+
 
     }
 

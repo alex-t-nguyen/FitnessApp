@@ -10,6 +10,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fitnessapp.R;
@@ -28,6 +29,7 @@ public class changeEmail extends AppCompatActivity implements View.OnClickListen
     // Widgets
     private EditText newEmail, confirmEmail;
     private Button changeEmailbtn, cancelEmailBtn;
+    private ProgressBar progressBar;
 
     // Firebase variables
     private FirebaseAuth firebaseAuth;
@@ -46,6 +48,7 @@ public class changeEmail extends AppCompatActivity implements View.OnClickListen
         confirmEmail = (EditText)findViewById(R.id.confirmUserEmail);
         changeEmailbtn = (Button)findViewById(R.id.changeEmailBtn);
         cancelEmailBtn = (Button)findViewById(R.id.cancelEmailBtn);
+        progressBar = (ProgressBar)findViewById(R.id.progressbar_changeEmail);
 
         changeEmailbtn.setOnClickListener(this);
         cancelEmailBtn.setOnClickListener(this);
@@ -57,28 +60,34 @@ public class changeEmail extends AppCompatActivity implements View.OnClickListen
         {
             case R.id.changeEmailBtn:
             {
+                progressBar.setVisibility(View.VISIBLE);
+
                 if(newEmail.getText().toString().isEmpty())
                 {
                     newEmail.setError("Field cannot be empty");
                     newEmail.requestFocus();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
                 if(confirmEmail.getText().toString().isEmpty())
                 {
                     confirmEmail.setError("Field cannot be empty");
                     confirmEmail.requestFocus();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
                 if(!Patterns.EMAIL_ADDRESS.matcher(newEmail.getText().toString()).matches())
                 {
                     newEmail.setError("Please enter a valid email address");
                     newEmail.requestFocus();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
                 if(!Patterns.EMAIL_ADDRESS.matcher(confirmEmail.getText().toString()).matches())
                 {
                     confirmEmail.setError("Please enter a valid email address");
                     confirmEmail.requestFocus();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
                 // Check if email and confirm email match
@@ -89,11 +98,13 @@ public class changeEmail extends AppCompatActivity implements View.OnClickListen
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
+                                progressBar.setVisibility(View.GONE);
                                 Toast.makeText(v.getContext(), "Email changed successfully", Toast.LENGTH_SHORT).show();
                                 Intent returnEditProfile = new Intent(getApplicationContext(), editProfile.class);
                                 startActivity(returnEditProfile);
                                 finish();
                             } else {
+                                progressBar.setVisibility(View.GONE);
                                 Toast.makeText(v.getContext(), "Failed to change email", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -101,6 +112,7 @@ public class changeEmail extends AppCompatActivity implements View.OnClickListen
                 }
                 else    // If email and confirm email don't match
                 {
+                    progressBar.setVisibility(View.GONE);
                     confirmEmail.setError("Confirm email does not match initial email");
                     confirmEmail.requestFocus();
                     return;

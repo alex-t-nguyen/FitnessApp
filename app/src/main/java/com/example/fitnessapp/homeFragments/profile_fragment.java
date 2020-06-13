@@ -2,6 +2,7 @@ package com.example.fitnessapp.homeFragments;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +16,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.fitnessapp.Introduction.IntroActivity;
 import com.example.fitnessapp.R;
+import com.example.fitnessapp.profileFragmentTabs.DarkModePrefManager;
+import com.example.fitnessapp.profileFragmentTabs.changePassword.change_pass_authenticate;
 import com.example.fitnessapp.profileFragmentTabs.editProfile;
 import com.example.fitnessapp.profileFragmentTabs.logoutDialog;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,9 +30,10 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
     private final static String TAG = "profileFragment";
     private View view;
     private FirebaseAuth mAuth;
-    private TextView logout, editprofilebtn;
-    private TextView helpclick;
-    private Dialog popup_logout;
+    private TextView logout, editprofilebtn, helpclick, changePassbtn;
+    DarkModePrefManager darkModePrefManager;
+    private Switch darkModeSwitch;
+
     public profile_fragment()
     {
 
@@ -37,16 +42,32 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
+        darkModePrefManager = new DarkModePrefManager(getActivity());
+        if (darkModePrefManager.loadDarkModeState())
+        {
+            getActivity().setTheme(R.style.darktheme);
+        }
+        else
+            getActivity().setTheme(R.style.AppTheme);
+
+        Log.d(TAG, "view refresh");
         view = inflater.inflate(R.layout.profile_fragment,container,false);
         mAuth = FirebaseAuth.getInstance();
+
+        darkModeSwitch = (Switch) view.findViewById(R.id.darkModeSwitch);
         logout = (TextView)view.findViewById(R.id.log_out);
         editprofilebtn = (TextView)view.findViewById(R.id.edit_profile);
         helpclick= (TextView)view.findViewById(R.id.help);
+        changePassbtn = (TextView)view.findViewById(R.id.change_password);
 
         editprofilebtn.setOnClickListener(this);
         logout.setOnClickListener(this);
         helpclick.setOnClickListener(this);
+        changePassbtn.setOnClickListener(this);
 
+        /*
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
         {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -56,30 +77,81 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
         {
             getActivity().setTheme(R.style.AppTheme);
         }
-        setDarkModeSwitch();
-        return view;
-    }
+        */
 
-    private void setDarkModeSwitch()
-    {
-        Switch darkModeSwitch = (Switch) view.findViewById(R.id.darkModeSwitch);
-        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+        if(darkModePrefManager.loadDarkModeState())
         {
             darkModeSwitch.setChecked(true);
+            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            Log.d(TAG, "Is Dark");
+        }
+        else
+        {
+            darkModeSwitch.setChecked(false);
+            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            Log.d(TAG, "Is Not Dark");
         }
         darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)
                 {
+                    Log.d(TAG, "Is Checked");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.viewpager, new profile_fragment()).commit();
+                    darkModePrefManager.setDarkMode(true);
+                    //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.viewpager, new profile_fragment()).commit();
+
 
                 }
                 else
                 {
+                    Log.d(TAG, "Not checked");
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.viewpager, new profile_fragment()).commit();
+                    darkModePrefManager.setDarkMode(false);
+                    Log.d(TAG, "MODE_NIGHT_NO Called");
+                    //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.viewpager, new profile_fragment()).commit();
+
+                }
+            }
+        });
+        //setDarkModeSwitch();
+        return view;
+    }
+
+    private void setDarkModeSwitch()
+    {
+        if(darkModePrefManager.loadDarkModeState())
+        {
+            darkModeSwitch.setChecked(true);
+            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            Log.d(TAG, "Is Dark");
+        }
+        else
+        {
+            darkModeSwitch.setChecked(false);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            Log.d(TAG, "Is Not Dark");
+        }
+        darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    Log.d(TAG, "Is Checked");
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    darkModePrefManager.setDarkMode(true);
+                    //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.viewpager, new profile_fragment()).commit();
+
+
+                }
+                else
+                {
+                    Log.d(TAG, "Not checked");
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    darkModePrefManager.setDarkMode(false);
+                    Log.d(TAG, "MODE_NIGHT_NO Called");
+                    //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.viewpager, new profile_fragment()).commit();
+
                 }
             }
         });
@@ -95,6 +167,12 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
                 Log.d(TAG, "Clicked edit profile");
                 Intent editProfileMenuIntent = new Intent(getActivity(), editProfile.class);
                 startActivity(editProfileMenuIntent);
+                break;
+            }
+            case R.id.change_password:
+            {
+                Intent changePassIntent = new Intent(getActivity(), change_pass_authenticate.class);
+                startActivity(changePassIntent);
                 break;
             }
             case R.id.log_out:

@@ -126,7 +126,7 @@ public class workoutTemplate_listAdapter extends RecyclerView.Adapter<RecyclerVi
         private void setNameDetails(Exercise e)
         {
             exercise.setText(e.getName());
-            String desc = e.getSets() + " x " + e.getReps();
+            String desc = e.getReps() + " x " + e.getWeight() + "lb";
             description.setText(desc);
         }
 

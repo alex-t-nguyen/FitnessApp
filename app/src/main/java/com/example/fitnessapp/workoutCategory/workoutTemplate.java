@@ -2,6 +2,7 @@ package com.example.fitnessapp.workoutCategory;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 
 import com.example.fitnessapp.R;
 import com.example.fitnessapp.listanimate.CustomItemAnimator;
+import com.example.fitnessapp.profileFragmentTabs.DarkModePrefManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,8 +46,9 @@ public class workoutTemplate extends AppCompatActivity {
 
     private Dialog popAddExercise, popAddRest;
     private ImageView popupPostImage, popupAddBtn;
+    private DarkModePrefManager darkModePrefManager;
 
-    TextView popupTitle, popupSets, popupReps, popupTime;
+    TextView popupTitle, popupWeight, popupReps, popupTime;
     ProgressBar popupClickProgress;
 
     private workoutTemplate_listAdapter adapter;
@@ -59,12 +62,19 @@ public class workoutTemplate extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        darkModePrefManager = new DarkModePrefManager(this);
+        if (darkModePrefManager.loadDarkModeState())
+        {
+            this.setTheme(R.style.darkthemeExercises);
+        }
+        else
+            this.setTheme(R.style.lightthemeExercises);
+
         setContentView(R.layout.workout_template);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Exercise 1");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         inipopupaddExercise();
         inipopupaddRest();
@@ -81,6 +91,8 @@ public class workoutTemplate extends AppCompatActivity {
             Log.d(TAG, workoutGroup);
         }
 
+        getSupportActionBar().setTitle(workoutKey);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(workoutGroup).child(workoutKey);
@@ -238,6 +250,7 @@ public class workoutTemplate extends AppCompatActivity {
 
     private void inipopupaddExercise() {
         popAddExercise = new Dialog(this);
+
         popAddExercise.setContentView(R.layout.popup_add_exercise);
         popAddExercise.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popAddExercise.getWindow().setLayout(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.WRAP_CONTENT);
@@ -246,11 +259,12 @@ public class workoutTemplate extends AppCompatActivity {
         // inipopup widgets
         popupPostImage = popAddExercise.findViewById(R.id.popup_img);
         popupTitle = popAddExercise.findViewById(R.id.popupTitle);
-        popupSets = popAddExercise.findViewById(R.id.popupSets);
+        popupWeight = popAddExercise.findViewById(R.id.popupWeight);
         popupReps = popAddExercise.findViewById(R.id.popupReps);
         popupAddBtn = popAddExercise.findViewById(R.id.popup_add);
         popupClickProgress = popAddExercise.findViewById(R.id.popup_progressBar);
 
+        popupTitle.requestFocus();
         // Add exercise click listener
         popupAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,13 +272,13 @@ public class workoutTemplate extends AppCompatActivity {
 
                 popupAddBtn.setVisibility(View.INVISIBLE);
                 popupClickProgress.setVisibility(View.VISIBLE);
-                Exercise exercise = new Exercise(popupTitle.getText().toString(), popupSets.getText().toString(), popupReps.getText().toString(), "");
+                Exercise exercise = new Exercise(popupTitle.getText().toString(), popupReps.getText().toString(), popupWeight.getText().toString(), "");
                 addExercise(exercise);
                 String exerciseKey = myRef.push().getKey();
                 Log.d(TAG, "key: " + exerciseKey);
                 myRef.child(exerciseKey).child("name").setValue(exercise.getName());
-                myRef.child(exerciseKey).child("sets").setValue(exercise.getSets());
                 myRef.child(exerciseKey).child("reps").setValue(exercise.getReps());
+                myRef.child(exerciseKey).child("weight").setValue(exercise.getWeight());
                 myRef.child(exerciseKey).child("rest").setValue(exercise.getRest());    // Empty string
 
                 //Log.i(TAG, popupTitle.getText().toString());
@@ -275,8 +289,8 @@ public class workoutTemplate extends AppCompatActivity {
                 myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(workoutGroup).child(workoutKey);
 
                 popupTitle.setText(null);
-                popupSets.setText(null);
                 popupReps.setText(null);
+                popupWeight.setText(null);
 
                 popupTitle.setFocusableInTouchMode(true);
                 popupTitle.setFocusable(true);
@@ -305,6 +319,8 @@ public class workoutTemplate extends AppCompatActivity {
         popupAddBtn = popAddRest.findViewById(R.id.popup_add_rest);
         popupClickProgress = popAddRest.findViewById(R.id.popup_progressBar);
 
+        popupTime.requestFocus();
+
         popupAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -317,8 +333,8 @@ public class workoutTemplate extends AppCompatActivity {
                 String restKey = myRef.push().getKey();
 
                 myRef.child(restKey).child("name").setValue(exercise.getName());    // Empty string
-                myRef.child(restKey).child("sets").setValue(exercise.getSets());    // Empty string
                 myRef.child(restKey).child("reps").setValue(exercise.getReps());    // Empty string
+                myRef.child(restKey).child("weight").setValue(exercise.getWeight());    // Empty string
                 myRef.child(restKey).child("rest").setValue(exercise.getRest());
 
                 popupClickProgress.setVisibility(View.INVISIBLE);

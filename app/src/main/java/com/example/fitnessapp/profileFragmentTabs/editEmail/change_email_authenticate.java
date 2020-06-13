@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fitnessapp.R;
@@ -27,12 +28,11 @@ public class change_email_authenticate extends AppCompatActivity implements View
     private final static String TAG = "editemailAuthenticate";
     private EditText email, password;
     private Button submitbtn, cancelbtn;
+    private ProgressBar progressBar;
 
     // Firebase variables
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class change_email_authenticate extends AppCompatActivity implements View
         password = (EditText)findViewById(R.id.passwordConfirm_foredit);
         submitbtn = (Button)findViewById(R.id.submit_editemail_btn);
         cancelbtn = (Button)findViewById(R.id.cancel_editemail_btn);
+        progressBar = (ProgressBar)findViewById(R.id.progressbar_emailAuthenticate);
 
         // Set button onClick listeners
         submitbtn.setOnClickListener(this);
@@ -58,22 +59,27 @@ public class change_email_authenticate extends AppCompatActivity implements View
         {
             case R.id.submit_editemail_btn:
             {
+                progressBar.setVisibility(View.VISIBLE);
+
                 if(email.getText().toString().isEmpty())
                 {
                     email.setError("Field cannot be empty");
                     email.requestFocus();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
                 if(!Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches())
                 {
                     email.setError("Please enter a valid email address");
                     email.requestFocus();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
                 if(password.getText().toString().isEmpty())
                 {
                     password.setError("Password is required");
                     password.requestFocus();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
                 firebaseAuth = FirebaseAuth.getInstance();
@@ -88,12 +94,14 @@ public class change_email_authenticate extends AppCompatActivity implements View
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful())
                         {
+                            progressBar.setVisibility(View.GONE);
                             Intent changeEmailActivity = new Intent(getApplicationContext(), changeEmail.class);
                             startActivity(changeEmailActivity);
                             finish();
                         }
                         else
                         {
+                            progressBar.setVisibility(View.GONE);
                             Toast.makeText(v.getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
@@ -102,6 +110,7 @@ public class change_email_authenticate extends AppCompatActivity implements View
             }
             case R.id.cancel_editemail_btn:
             {
+                progressBar.setVisibility(View.GONE);
                 Intent returnEditProfile = new Intent(v.getContext(), editProfile.class);
                 startActivity(returnEditProfile);
                 finish();

@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.fitnessapp.R;
 import com.example.fitnessapp.Clock.timer_stopwatch;
+import com.example.fitnessapp.profileFragmentTabs.DarkModePrefManager;
 import com.example.fitnessapp.workoutCategory.workouts;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -24,6 +25,7 @@ public class menu_fragment extends Fragment implements View.OnClickListener {
     private boolean isOpen = false;
     private static final String TAG = "Menu";
     private CardView workoutCard, dietCard, clockCard;
+    private DarkModePrefManager darkModePrefManager;
 
     public menu_fragment()
     {
@@ -43,6 +45,15 @@ public class menu_fragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        darkModePrefManager = new DarkModePrefManager(getActivity());
+        if (darkModePrefManager.loadDarkModeState())
+        {
+            getActivity().setTheme(R.style.darktheme);
+        }
+        else
+            getActivity().setTheme(R.style.AppTheme);
+
         view = inflater.inflate(R.layout.menu_fragment,container,false);
 
         /*

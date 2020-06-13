@@ -210,6 +210,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void userLogin()
     {
+        progressBar.setVisibility(View.VISIBLE);
+
         final String email = username.getText().toString().trim();
         String pass = password.getText().toString().trim();
 
@@ -242,18 +244,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
-                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+
                     Intent homeActivity = new Intent(getApplicationContext(), Home.class);
                     getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   // Clear all tasks on top of task (prevent hitting back button to go back to login)
                     User user = new User(email);
                     database = FirebaseDatabase.getInstance();
                     myRef = database.getReference("Users"); // Get reference in database (Users path)
                     myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);   // Assign user id in User path, then user's email to the ID
-                    progressBar.setVisibility(View.GONE);
+
                     startActivity(homeActivity);
                 }
                 else
                 {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                 }
@@ -294,6 +298,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onClick(View v) {
                         final String email = forgotPassText.getText().toString();
+                        progressBar.setVisibility(View.VISIBLE);
 
                         // Email validation
                         if (email.isEmpty())
@@ -314,10 +319,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful())
                                 {
+                                    progressBar.setVisibility(View.GONE);
                                     Toast.makeText(getApplicationContext(), "Password reset link sent", Toast.LENGTH_SHORT).show();
                                 }
-                                else
+                                else {
+                                    progressBar.setVisibility(View.GONE);
                                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                         popupForgotPass.dismiss();
