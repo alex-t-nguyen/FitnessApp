@@ -73,9 +73,9 @@
         <TextView
             style="@style/viewParent.headerText.settingsMiniTitle"
             android:text="Notifications"/>
-        <Switch
-            style="@style/settingsText"
-            android:checked="true"
+        <TextView
+            android:id="@+id/notifications"
+            style="@style/viewParent.headerText.settingsTextIcon"
             android:drawableLeft="@drawable/ic_notifications"
             android:text="Notifications"/>
         <TextView
