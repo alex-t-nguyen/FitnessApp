@@ -35,6 +35,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/backgroundcolor"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
@@ -42,7 +43,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="10dp"
-            android:background="#fcfcfc"
+            android:background="?attr/backgroundcolor"
             android:gravity="center"
             android:id="@+id/ll" >
 
@@ -56,6 +57,7 @@
                     android:id="@+id/edit_email_btn"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
+                    android:background="?attr/cardBackground"
                     android:layout_width="340dp"
                     android:layout_height="150dp"
                     android:layout_margin="10dp">
@@ -64,6 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
+                        android:background="?attr/cardBackground"
                         android:gravity="center">
                         <ImageView
                             android:layout_width="64dp"
@@ -75,7 +78,8 @@
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
                             android:layout_marginTop="10dp"
-                            android:text="Email"/>
+                            android:text="Email"
+                            android:textColor="?attr/textcolor"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -87,7 +91,7 @@
                             android:gravity="center"
                             android:text="Edit Email"
                             android:padding="5dp"
-                            android:textColor="@android:color/darker_gray"/>
+                            android:textColor="?attr/textcolorhint"/>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -96,6 +100,7 @@
                 android:id="@+id/delete_account_btn"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"
+                android:background="?attr/cardBackground"
                 android:layout_width="340dp"
                 android:layout_height="150dp"
                 android:layout_margin="10dp">
@@ -104,6 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
+                    android:background="?attr/cardBackground"
                     android:gravity="center">
                     <ImageView
                         android:layout_width="64dp"
@@ -115,7 +121,8 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:layout_marginTop="10dp"
-                        android:text="Account"/>
+                        android:text="Account"
+                        android:textColor="?attr/textcolor"/>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -127,7 +134,7 @@
                         android:gravity="center"
                         android:text="Delete Account"
                         android:padding="5dp"
-                        android:textColor="@android:color/darker_gray"/>
+                        android:textColor="?attr/textcolorhint"/>
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

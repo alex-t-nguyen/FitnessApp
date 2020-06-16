@@ -32,4 +32,7 @@
         <item>Set</item>
         <item>Add</item>
     </string-array>
+
+    <string name="google_map_firebase_API_key">AIzaSyDsawSLVeBKKwxV83JxAHGqZ9QnH1Zn2Ys</string>
+    <string name="google_map_API_key">AIzaSyDtzsLhCOQ16aEOJz6_kMeRI9ztIwZohFE</string>
 </resources>

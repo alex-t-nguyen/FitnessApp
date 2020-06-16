@@ -97,24 +97,28 @@ public class  signUp extends AppCompatActivity implements View.OnClickListener {
 
         if(email.isEmpty())
         {
+            progressBar.setVisibility(View.GONE);
             EditTextEmail.setError("Email is required");
             EditTextEmail.requestFocus();
             return;
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
+            progressBar.setVisibility(View.GONE);
             EditTextEmail.setError("Please enter a valid email");
             EditTextEmail.requestFocus();
             return;
         }
         if(password.isEmpty())
         {
+            progressBar.setVisibility(View.GONE);
             EditTextPassword.setError("Password is required");
             EditTextPassword.requestFocus();
             return;
         }
         if(password.length() < 6)
         {
+            progressBar.setVisibility(View.GONE);
             EditTextPassword.setError("Password must be at least 6 characters");
             EditTextPassword.requestFocus();
             return;
@@ -181,12 +185,16 @@ public class  signUp extends AppCompatActivity implements View.OnClickListener {
     public void handleFacebookToken(AccessToken token)
     {
         Log.d(TAG, "handleFacebookToken" + token);
+
+        progressBar.setVisibility(View.VISIBLE);
+
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
+                    progressBar.setVisibility(View.GONE);
                     Log.d(TAG, "Facebook sign-in successful");
                     Intent returnLogin = new Intent(signUp.this, MainActivity.class);
                     //getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   // Clear all tasks on top of task (prevent hitting back button to go back to login)
@@ -195,6 +203,7 @@ public class  signUp extends AppCompatActivity implements View.OnClickListener {
                 }
                 else
                 {
+                    progressBar.setVisibility(View.GONE);
                     Log.d(TAG, "Facebook log-in failed", task.getException());
                     Toast.makeText(signUp.this, "Authentication failed", Toast.LENGTH_SHORT).show();
                 }

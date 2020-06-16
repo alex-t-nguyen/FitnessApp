@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".homeFragments.Home"
-    android:orientation="vertical"
-    android:background="?attr/backgroundcolor">
+    android:background="?attr/bottomsheetCardBackground"
+    android:orientation="vertical">
 
 
     <com.google.android.material.appbar.AppBarLayout
@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:gravity="center"
-        android:background="@color/colorTabs"
-        android:elevation="0dp">
+        android:background="?attr/bottomsheetCardBackground"
+        app:elevation="0dp">
 
         <TextView
             android:id="@+id/calendarDate"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/cairo_light"
             android:textSize="30sp"
-            android:textColor="@color/colorTableText"/>
+            android:textColor="?attr/tabTextColor"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.tabs.TabLayout
@@ -31,11 +31,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabGravity="fill"
+        app:elevation="0dp"
         app:tabMode="fixed"
-        app:tabTextColor="@color/colorTableText"
-        app:tabIndicatorColor="@color/colorTableTextHover"
-        app:tabSelectedTextColor="@color/colorTableTextHover"
-        android:background="@color/colorTabs"
+        app:tabTextColor="?attr/tabTextColor"
+        app:tabIndicatorColor="?attr/tabTextHover"
+        app:tabSelectedTextColor="?attr/tabTextHover"
+        android:background="?attr/bottomsheetCardBackground"
     />
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"

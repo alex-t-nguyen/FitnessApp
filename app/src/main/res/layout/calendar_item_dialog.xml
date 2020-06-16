@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="2"
+    android:padding="16dp"
+    android:background="?attr/backgroundcolor">
+
+    <EditText
+        android:id ="@+id/dialogTitle"
+        android:layout_width ="match_parent"
+        android:layout_height ="50dp"
+        android:layout_weight =".3"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLines ="4"
+        android:maxLength ="2000"
+        android:hint ="Title"
+        android:textColor="?attr/textcolor"
+        android:textColorHint="?attr/textcolorhint2"
+        android:background="?attr/cardBackground"
+        android:scrollHorizontally="false"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="top|start" />
+    <EditText
+        android:id ="@+id/dialogDescription"
+        android:layout_width ="match_parent"
+        android:layout_height ="wrap_content"
+        android:layout_weight ="1.7"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLines ="4"
+        android:maxLength ="2000"
+        android:hint ="Description"
+        android:textColor="?attr/textcolor"
+        android:textColorHint="?attr/textcolorhint2"
+        android:background="?attr/cardBackground"
+        android:scrollHorizontally="false"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="top|start"/>
+    <Button
+        android:id="@+id/submitDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="submit"
+        android:textColor="@color/white"
+        android:layout_gravity="right"
+        android:background="?attr/colorAccent" />
+</LinearLayout>

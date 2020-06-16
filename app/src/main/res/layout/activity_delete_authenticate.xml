@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:text="Enter confirmation details to delete account"
+        android:textColorHint="@color/login_form_details"
         android:textColor="@color/white"
         android:textSize="17sp"
         android:textStyle="bold"
@@ -71,7 +72,8 @@
             android:hint="Password"
             android:padding="16dp"
             android:inputType="textPassword"
-
+            android:textColorHint="@color/login_form_details"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/username" />

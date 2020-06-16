@@ -28,6 +28,8 @@ public class editProfile extends AppCompatActivity implements View.OnClickListen
     private Toolbar toolbar;
     private Dialog mDialog;
     private ProgressBar progressBar;
+
+    private DarkModePrefManager darkModePrefManager;
     Button deleteAccountbtn, cancelbtn;
 
     // Firebase variables
@@ -38,6 +40,16 @@ public class editProfile extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        darkModePrefManager = new DarkModePrefManager(this);
+        if (darkModePrefManager.loadDarkModeState())
+        {
+            setTheme(R.style.darkthemeProfile);
+        }
+        else {
+            setTheme(R.style.lightThemeProfile);
+        }
+
         // Set layout
         setContentView(R.layout.edit_profile_menu);
 

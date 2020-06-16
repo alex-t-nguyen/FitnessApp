@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/backgroundcolor">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="?attr/backgroundcolor"
+    android:weightSum="7">
+
+    <LinearLayout
+        android:id="@+id/linearlayoutbtn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/backgroundcolor"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dayLabel1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="S"
+            android:textColor="?attr/textcolor"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="3dp"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/dateBtn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textcolorhint2"
+            android:background="?attr/backgroundcolor"
+            android:text="13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayoutbtn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/backgroundcolor"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dayLabe2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="M"
+            android:textColor="?attr/textcolor"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="3dp"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/dateBtn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textcolorhint2"
+            android:background="?attr/backgroundcolor"
+            android:text="13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayoutbtn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/backgroundcolor"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dayLabe3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="T"
+            android:textColor="?attr/textcolor"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="3dp"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/dateBtn3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textcolorhint2"
+            android:background="?attr/backgroundcolor"
+            android:text="13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayoutbtn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/backgroundcolor"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dayLabe4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="W"
+            android:textColor="?attr/textcolor"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="3dp"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/dateBtn4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textcolorhint2"
+            android:background="?attr/backgroundcolor"
+            android:text="13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayoutbtn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/backgroundcolor"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dayLabel5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="T"
+            android:textColor="?attr/textcolor"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="3dp"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/dateBtn5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textcolorhint2"
+            android:background="?attr/backgroundcolor"
+            android:text="13" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayoutbtn6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/backgroundcolor"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dayLabel6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="F"
+            android:textColor="?attr/textcolor"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="3dp"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/dateBtn6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textcolorhint2"
+            android:background="?attr/backgroundcolor"
+            android:text="13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayoutbtn7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?attr/backgroundcolor"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dayLabel7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="S"
+            android:textColor="?attr/textcolor"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="3dp"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/dateBtn7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textcolorhint2"
+            android:background="?attr/backgroundcolor"
+            android:text="13" />
+
+    </LinearLayout>
+
+</LinearLayout>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/bargraph"
+        android:layout_gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="100dp"
+        android:background="?attr/backgroundcolor">
+    </com.github.mikephil.charting.charts.BarChart>
+</LinearLayout>

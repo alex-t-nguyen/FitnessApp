@@ -7,10 +7,12 @@
         <item name="colorPrimaryDark">@color/dark_blue</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="backgroundcolor">#fcfcfc</item>
-        <item name="android:textColorHint">@color/login_form_details</item>
-        <item name="cardBackground">#ffffff</item>
+        <item name="textColorHint">@color/login_form_details</item>
+        <item name="cardBackground">#f6f6f6</item>
+        <item name="bottomsheetCardBackground">#f6f6f6</item>
         <item name="textcolor">#808080</item>
         <item name="textcolorhint">#808080</item>
+        <item name="textcolorhint2">#a0a0a0</item>
         <item name="tintcolor">#000000</item>
         <item name="buttoncolor">#2196F3</item>
         <item name="restcolor">#dcdcdc</item>
@@ -19,18 +21,23 @@
         <item name="workoutGroupTextColor">@color/workoutCard</item>
         <item name="workoutItemTextColor">#B44956</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="bottomSheetBackground">@color/white</item>
+        <item name="calendarCardTitle">#258bd6</item>
+        <item name="fabButonColor">#FF4081</item>
     </style>
 
     <!-- Dark Mode theme -->
     <style name="darktheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">#212121</item>
         <item name="colorPrimaryDark">#000000</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#03DAC6</item>
         <item name="backgroundcolor">#303030</item>
-        <item name="android:textColorHint">@color/login_form_details</item>
+        <item name="textColorHint">@color/login_form_details</item>
         <item name="cardBackground">#424242</item>
+        <item name="bottomsheetCardBackground">#0e0e0e</item>
         <item name="textcolor">#ffffff</item>
         <item name="textcolorhint">#dcdcdc</item>
+        <item name="textcolorhint2">#cccccc</item>
         <item name="tintcolor">#ffffff</item>
         <item name="buttoncolor">#2196F3</item>
         <item name="restcolor">#424242</item>
@@ -39,6 +46,9 @@
         <item name="workoutGroupTextColor">#ffffff</item>
         <item name="workoutItemTextColor">#f0f0f0</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="bottomSheetBackground">@color/black</item>
+        <item name="calendarCardTitle">#258bd6</item>
+        <item name="fabButonColor">#03DAC6</item>
     </style>
 
     <!-- Light theme for exercises activity -->
@@ -74,6 +84,63 @@
         <item name="restcolorText">#e8e8e8</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
+
+
+    <!-- Base application theme. -->
+    <style name="lightThemeProfile" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Light Mode theme -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/dark_blue</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundcolor">#fcfcfc</item>
+        <item name="textColorHint">@color/login_form_details</item>
+        <item name="cardBackground">#f6f6f6</item>
+        <item name="bottomsheetCardBackground">#f6f6f6</item>
+        <item name="textcolor">#808080</item>
+        <item name="textcolorhint">#808080</item>
+        <item name="textcolorhint2">#a0a0a0</item>
+        <item name="tintcolor">#000000</item>
+        <item name="buttoncolor">#2196F3</item>
+        <item name="restcolor">#dcdcdc</item>
+        <item name="workoutGroup">@color/workoutCard</item>
+        <item name="workoutItem">#ffffff</item>
+        <item name="workoutGroupTextColor">@color/workoutCard</item>
+        <item name="workoutItemTextColor">#B44956</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="bottomSheetBackground">@color/white</item>
+        <item name="calendarCardTitle">#258bd6</item>
+        <item name="fabButonColor">#FF4081</item>
+        <item name="tabTextColor">#33C4B3</item>
+        <item name="tabTextHover">#F68E4F</item>
+    </style>
+
+    <!-- Dark Mode theme for Edit Profile -->
+    <style name="darkthemeProfile" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#212121</item>
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="colorAccent">#03DAC6</item>
+        <item name="backgroundcolor">#303030</item>
+        <item name="textColorHint">@color/login_form_details</item>
+        <item name="cardBackground">#424242</item>
+        <item name="bottomsheetCardBackground">#282828</item>
+        <item name="textcolor">#ffffff</item>
+        <item name="textcolorhint">#dcdcdc</item>
+        <item name="textcolorhint2">#cccccc</item>
+        <item name="tintcolor">#ffffff</item>
+        <item name="buttoncolor">#2196F3</item>
+        <item name="restcolor">#424242</item>
+        <item name="workoutGroup">#424242</item>
+        <item name="workoutItem">#808080</item>
+        <item name="workoutGroupTextColor">#ffffff</item>
+        <item name="workoutItemTextColor">#f0f0f0</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="bottomSheetBackground">@color/black</item>
+        <item name="calendarCardTitle">#258bd6</item>
+        <item name="fabButonColor">#03DAC6</item>
+        <item name="tabTextColor">#dcdcdc</item>
+        <item name="tabTextHover">#F4A950</item>
+    </style>
+
 
     <style name="viewParent">
         <item name="android:layout_width">wrap_content</item>

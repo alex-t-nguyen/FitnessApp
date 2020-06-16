@@ -107,7 +107,7 @@
             android:drawableLeft="@drawable/ic_logout"
             android:text="Logout"
             android:drawableStart="@drawable/ic_logout"
-            android:textColor="?attr/textcolor"/>
+            android:textColor="@color/colorHeaderLight"/>
 
     </LinearLayout>
 </ScrollView>

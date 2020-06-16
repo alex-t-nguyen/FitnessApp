@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,9 +39,12 @@ public class Home extends AppCompatActivity implements logoutDialog.Communicator
         if (darkModePrefManager.loadDarkModeState())
         {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            setTheme(R.style.darkthemeProfile);
         }
-        else
+        else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            setTheme(R.style.lightThemeProfile);
+        }
 
         setContentView(R.layout.activity_home);
         calendarDate();
@@ -54,7 +55,7 @@ public class Home extends AppCompatActivity implements logoutDialog.Communicator
 
         // Adding Fragments
         adapter.addFragment(new menu_fragment(),"Menu");
-        adapter.addFragment(new geolocation_fragment(),"Map");
+        adapter.addFragment(new calendar_fragment(),"Schedule");
         adapter.addFragment(new profile_fragment(),"Profile");
 
         viewPager.setAdapter(adapter);

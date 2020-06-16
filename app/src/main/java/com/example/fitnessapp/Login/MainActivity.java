@@ -135,12 +135,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         Log.d(TAG, "handleFacebookToken" + token);
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+
         progressBar.setVisibility(View.VISIBLE);
+
         mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
+                    progressBar.setVisibility(View.GONE);
+
                     Log.d(TAG, "Facebook sign-in successful");
                     FirebaseUser user = mAuth.getCurrentUser();
                     database = FirebaseDatabase.getInstance();
@@ -161,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else
                 {
+                    progressBar.setVisibility(View.GONE);
                     Log.d(TAG, "Facebook log-in failed", task.getException());
                     Toast.makeText(MainActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
                     updateUI(null);
@@ -217,24 +222,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(email.isEmpty())
         {
+            progressBar.setVisibility(View.GONE);
             username.setError("Email is required");
             username.requestFocus();
             return;
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
+            progressBar.setVisibility(View.GONE);
             username.setError("Please enter a valid email");
             username.requestFocus();
             return;
         }
         if(pass.isEmpty())
         {
+            progressBar.setVisibility(View.GONE);
             password.setError("Password is required");
             password.requestFocus();
             return;
         }
         if(pass.length() < 6)
         {
+            progressBar.setVisibility(View.GONE);
             password.setError("Password must be at least 6 characters");
             password.requestFocus();
             return;
@@ -303,12 +312,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         // Email validation
                         if (email.isEmpty())
                         {
+                            progressBar.setVisibility(View.GONE);
                             forgotPassText.setError("Field cannot be empty");
                             forgotPassText.requestFocus();
                             return;
                         }
                         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
                         {
+                            progressBar.setVisibility(View.GONE);
                             username.setError("Please enter a valid email");
                             username.requestFocus();
                             return;
