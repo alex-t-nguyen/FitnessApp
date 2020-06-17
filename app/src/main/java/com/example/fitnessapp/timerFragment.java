@@ -56,7 +56,6 @@ public class timerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.timer_fragment, container, false);
-
         countDown = view.findViewById(R.id.text_view_countdown);
         editTextInput = view.findViewById(R.id.edit_text_input);
 
@@ -172,7 +171,7 @@ public class timerFragment extends Fragment {
     }
     private void startTimer() {
         endTime = System.currentTimeMillis() + timeLeftInMillis;
-
+        closeKeyboard();
         CountDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -189,6 +188,8 @@ public class timerFragment extends Fragment {
 
         timerRunning = true;
         updateWatchInterface();
+
+
     }
 
     private void pauseTimer()

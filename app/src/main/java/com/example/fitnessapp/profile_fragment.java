@@ -2,7 +2,9 @@ package com.example.fitnessapp;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +34,7 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
     private final static String TAG = "profileFragment";
     private View view;
     private FirebaseAuth mAuth;
-    private TextView logout, editprofilebtn;
+    private TextView logout, editprofilebtn,notification;
     private TextView helpclick;
     private Dialog popup_logout;
     public profile_fragment()
@@ -48,10 +50,12 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
         logout = (TextView)view.findViewById(R.id.log_out);
         editprofilebtn = (TextView)view.findViewById(R.id.edit_profile);
         helpclick= (TextView)view.findViewById(R.id.help);
+        notification= (TextView)view.findViewById(R.id.notifications);
 
         editprofilebtn.setOnClickListener(this);
         logout.setOnClickListener(this);
         helpclick.setOnClickListener(this);
+        notification.setOnClickListener(this);
 
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
         {
@@ -130,6 +134,14 @@ public class profile_fragment extends Fragment implements View.OnClickListener {
                 startActivity(goToHelp);
                 break;
             }
+            case R.id.notifications: {
+                Intent settingsIntent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .putExtra(Settings.EXTRA_APP_PACKAGE, getActivity().getPackageName());
+
+                startActivity(settingsIntent);
+            }
+
         }
     }
 }
