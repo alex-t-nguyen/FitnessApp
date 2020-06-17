@@ -67,6 +67,8 @@
         <TextView
             android:id="@+id/edit_profile"
             style = "@style/viewParent.headerText.settingsTextIcon"
+            android:drawableRight="@drawable/ic_more"
+            android:drawableEnd="@drawable/ic_more"
             android:drawableLeft="@drawable/ic_edit_profile"
             android:text="Edit Profile"
             android:drawableStart="@drawable/ic_edit_profile"
@@ -74,17 +76,26 @@
         <TextView
             android:id="@+id/change_password"
             style="@style/viewParent.headerText.settingsTextIcon"
+            android:drawableRight="@drawable/ic_more"
+            android:drawableEnd="@drawable/ic_more"
             android:drawableLeft="@drawable/ic_edit_password"
             android:layout_marginTop="10dp"
             android:text="Change Password"
             android:drawableStart="@drawable/ic_edit_password"
             android:textColor="?attr/textcolor"/>
         <TextView
-            android:id="@+id/notifications"
             style="@style/viewParent.headerText.settingsMiniTitle"
             android:text="Notifications"
-            android:drawableLeft="@drawable/ic_notifications"
             android:textColor="?attr/textcolor"/>
+        <TextView
+            android:id="@+id/notifications"
+            style="@style/viewParent.headerText.settingsTextIcon"
+            android:drawableRight="@drawable/ic_more"
+            android:text="Notifications"
+            android:drawableLeft="@drawable/ic_notifications"
+            android:textColor="?attr/textcolor"
+            android:drawableStart="@drawable/ic_notifications"
+            android:drawableEnd="@drawable/ic_more" />
         <TextView
             style="@style/viewParent.headerText.settingsMiniTitle"
             android:text="Logins"
@@ -92,6 +103,8 @@
         <TextView
             android:id="@+id/help"
             style="@style/viewParent.headerText.settingsTextIcon"
+            android:drawableRight="@drawable/ic_more"
+            android:drawableEnd="@drawable/ic_more"
             android:drawableLeft="@drawable/ic_help_outline_black_24dp"
             android:text="Help"
             android:drawableStart="@drawable/ic_help_outline_black_24dp"
@@ -99,6 +112,8 @@
         <TextView
             android:id="@+id/log_out"
             style="@style/viewParent.headerText.settingsTextLogoutIcon"
+            android:drawableRight="@drawable/ic_more"
+            android:drawableEnd="@drawable/ic_more"
             android:drawableLeft="@drawable/ic_logout"
             android:text="Logout"
             android:drawableStart="@drawable/ic_logout"

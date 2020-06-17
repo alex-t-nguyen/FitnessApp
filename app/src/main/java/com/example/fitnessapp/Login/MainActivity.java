@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         Intent homeIntent;
         if(user != null) {
-            Toast.makeText(MainActivity.this, "User logged In", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(MainActivity.this, "User logged In", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.GONE);
             homeIntent = new Intent(MainActivity.this, Home.class);
             startActivity(homeIntent);
@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updateUI(currentUser);
         //mAuth.addAuthStateListener(authStateListener);
     }
+
 
     @Override
     protected void onStop() {

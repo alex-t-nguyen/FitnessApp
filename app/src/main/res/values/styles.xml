@@ -173,7 +173,7 @@
     </style>
 
     <style name="viewParent.headerText.settingsTextIcon" parent="settingsText">
-        <item name="android:drawableRight">@drawable/ic_more</item>
+        <item name="android:drawableRight">@drawable/ic_more2</item>
     </style>
 
     <style name="viewParent.headerText.settingsTextLogoutIcon" parent="settingsText">
