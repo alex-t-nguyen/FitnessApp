@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:textSize="18sp"
     android:padding="10dp"
-    android:textColor="@color/colorProfilePrimaryDark">
+    android:textColor="?attr/textcolor"
+    android:background="?attr/bottomsheetCardBackground">
 
 </CheckedTextView>

@@ -16,11 +16,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="exitUntilCollapsed|scroll"
-            app:contentScrim="@color/colorPrimaryDark"
+            app:contentScrim="?attr/colorPrimary"
             app:title="Profile"
             app:expandedTitleMargin="48dp"
             app:expandedTitleMarginEnd="64dp"
-            android:background="@drawable/blue_dividers" >
+            android:background="?attr/colorPrimary" >
 
             <androidx.appcompat.widget.Toolbar
                 app:theme="@style/ThemeOverlay.AppCompat"

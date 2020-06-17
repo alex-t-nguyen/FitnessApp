@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="?attr/colorPrimary"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    android:background="?attr/bottomsheetCardBackground"
+    android:paddingTop="10dp"
+    style="@style/lightThemeProfile">
 
 </androidx.appcompat.widget.Toolbar>

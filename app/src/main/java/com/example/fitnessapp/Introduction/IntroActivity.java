@@ -48,19 +48,13 @@ public class IntroActivity extends AppCompatActivity {
 
         if(intent.getBooleanExtra("Helper",false))
         {
-
-
-            fromHelper=true;
+            fromHelper = true;
         }
         intent.putExtra("Helper",false);
          if (restorePrefData()&&!fromHelper) {
-
-
             Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class );
             startActivity(mainActivity);
             finish();
-
-
         }
 
         setContentView(R.layout.activity_intro);
@@ -78,20 +72,24 @@ public class IntroActivity extends AppCompatActivity {
         // fill list screen
 
         final List<ScreenItem> mList = new ArrayList<>();
-        mList.add(new ScreenItem("Fresh Food","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.img1));
-        mList.add(new ScreenItem("Fast Delivery","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.img2));
-        mList.add(new ScreenItem("Easy Payment","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.img3));
+        mList.add(new ScreenItem("Create Workouts",
+                "Create and group your own customizable workouts. " +
+                        "Exercises can be deleted by swiping, and repositioned by holding to drag and drop. " +
+                        "Note that repositioned exercises will only be saved by clicking the save button in the top-right dropdown. ", R.drawable.workout_intro_img));
+        mList.add(new ScreenItem("Schedule Routines","Make notes to plan your week and develop a workout routine by clicking on the date or graph in the schedules tab. " +
+                "Notes can be deleted by swiping, but not repositioned.", R.drawable.schedule_intro_img));
+        mList.add(new ScreenItem("Welcome","To view this again, just click the HELP tab in the Profile menu.",R.drawable.title_img));
 
         // setup viewpager
-        screenPager =findViewById(R.id.screen_viewpager);
+        screenPager = findViewById(R.id.screen_viewpager);
         introViewPagerAdapter = new IntroViewPagerAdapter(this,mList);
         screenPager.setAdapter(introViewPagerAdapter);
 
-        // setup tablayout with viewpager
+        // setup tab layout with viewpager
 
         tabIndicator.setupWithViewPager(screenPager);
 
-        // next button click Listner
+        // next button click Listener
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +104,7 @@ public class IntroActivity extends AppCompatActivity {
 
                 }
 
-                if (position == mList.size()-1) { // when we rech to the last screen
+                if (position == mList.size()-1) { // when we reach to the last screen
 
                     // TODO : show the GETSTARTED Button and hide the indicator and the next button
 
@@ -120,7 +118,7 @@ public class IntroActivity extends AppCompatActivity {
             }
         });
 
-        // tablayout add change listener
+        // tab layout add change listener
 
 
         tabIndicator.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {

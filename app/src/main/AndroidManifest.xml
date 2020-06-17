@@ -41,7 +41,7 @@
         <activity
             android:name=".Clock.timer_stopwatch"
             android:label="@string/title_activity_timer_stopwatch"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name=".timer_stopwatch" />

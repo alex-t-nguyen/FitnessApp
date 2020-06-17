@@ -111,8 +111,6 @@ public class change_email_authenticate extends AppCompatActivity implements View
             case R.id.cancel_editemail_btn:
             {
                 progressBar.setVisibility(View.GONE);
-                Intent returnEditProfile = new Intent(v.getContext(), editProfile.class);
-                startActivity(returnEditProfile);
                 finish();
                 break;
             }

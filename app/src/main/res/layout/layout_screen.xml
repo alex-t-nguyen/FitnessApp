@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="#1B1414">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -23,7 +23,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
         android:text="TextView"
-        android:textColor="@color/intro_title_color"
+        android:textColor="@color/white"
         android:textSize="32dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -43,7 +43,9 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="8dp"
         android:text="TextView"
+        android:textColor="@color/login_form_details"
         android:gravity= "center"
+        android:breakStrategy="simple"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

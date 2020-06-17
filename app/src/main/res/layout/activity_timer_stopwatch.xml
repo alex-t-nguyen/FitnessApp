@@ -5,34 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Clock.timer_stopwatch"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?attr/bottomsheetCardBackground">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:minHeight="?actionBarSize"
-            android:padding="@dimen/appbar_padding"
-            android:text="Clock"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="?attr/bottomsheetCardBackground">
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:layout_height="45dp"
+            android:layout_width="match_parent" />
     </com.google.android.material.appbar.AppBarLayout>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        app:tabTextColor="@color/colorTableText"
-        app:tabIndicatorColor="@color/colorTableTextHover"
-        app:tabSelectedTextColor="@color/colorTableTextHover"
-
-        android:background="@color/colorPrimary"/>
+        app:tabTextColor="?attr/tabTextColor"
+        app:tabIndicatorColor="?attr/tabTextHover"
+        app:tabSelectedTextColor="?attr/tabTextHover"
+        android:background="?attr/bottomsheetCardBackground"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"

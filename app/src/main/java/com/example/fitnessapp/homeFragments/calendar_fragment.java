@@ -147,7 +147,8 @@ public class calendar_fragment extends Fragment implements View.OnClickListener,
         barChart.getAxisLeft().setEnabled(false);
         barChart.getAxisRight().setEnabled(false);
         barChart.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        Log.d(TAG, "offSet: " + barChart.getLegend().getXOffset());
+        barChart.setHighlightPerDragEnabled(false);
+        barChart.setScaleEnabled(false);
 
         createBarGraph();
 

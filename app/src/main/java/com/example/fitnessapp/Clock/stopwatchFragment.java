@@ -99,6 +99,7 @@ public class stopwatchFragment extends Fragment{
                 handler.removeCallbacks(runnable);
 
                 reset.setEnabled(true);
+                start.setEnabled(true);
 
             }
         });
@@ -120,6 +121,8 @@ public class stopwatchFragment extends Fragment{
                 ListElementsArrayList.clear();
 
                 adapter.notifyDataSetChanged();
+
+                start.setEnabled(true);
             }
         });
 

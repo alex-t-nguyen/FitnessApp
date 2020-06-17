@@ -251,6 +251,8 @@ public class workoutTemplate extends AppCompatActivity {
     private void inipopupaddExercise() {
         popAddExercise = new Dialog(this);
 
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
         popAddExercise.setContentView(R.layout.popup_add_exercise);
         popAddExercise.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popAddExercise.getWindow().setLayout(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.WRAP_CONTENT);
@@ -269,6 +271,8 @@ public class workoutTemplate extends AppCompatActivity {
         popupAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                imm.hideSoftInputFromWindow(popupAddBtn.getWindowToken(), 0);
 
                 popupAddBtn.setVisibility(View.INVISIBLE);
                 popupClickProgress.setVisibility(View.VISIBLE);
@@ -306,6 +310,9 @@ public class workoutTemplate extends AppCompatActivity {
     }
 
     private void inipopupaddRest() {
+
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
         popAddRest = new Dialog(this);
         popAddRest.setContentView(R.layout.popup_add_rest);
         popAddRest.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -324,6 +331,8 @@ public class workoutTemplate extends AppCompatActivity {
         popupAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                imm.hideSoftInputFromWindow(popupAddBtn.getWindowToken(), 0);
 
                 popupAddBtn.setVisibility(View.INVISIBLE);
                 popupClickProgress.setVisibility(View.VISIBLE);

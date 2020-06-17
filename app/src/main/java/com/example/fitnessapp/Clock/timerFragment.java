@@ -56,13 +56,12 @@ public class timerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.timer_fragment, container, false);
-
         countDown = view.findViewById(R.id.text_view_countdown);
         editTextInput = view.findViewById(R.id.edit_text_input);
 
         unitSelector = view.findViewById(R.id.spinner_selectUnit);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.timer_units, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.timer_units, R.layout.color_spinner_layout);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         unitSelector.setAdapter(adapter);
 
         buttonStartPause = view.findViewById(R.id.button_startPause);
@@ -171,6 +170,7 @@ public class timerFragment extends Fragment {
         closeKeyboard();
     }
     private void startTimer() {
+        closeKeyboard();
         endTime = System.currentTimeMillis() + timeLeftInMillis;
 
         CountDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
