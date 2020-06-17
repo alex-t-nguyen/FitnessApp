@@ -172,7 +172,7 @@ public class timerFragment extends Fragment {
     private void startTimer() {
         closeKeyboard();
         endTime = System.currentTimeMillis() + timeLeftInMillis;
-
+        closeKeyboard();
         CountDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -189,6 +189,8 @@ public class timerFragment extends Fragment {
 
         timerRunning = true;
         updateWatchInterface();
+
+
     }
 
     private void pauseTimer()

@@ -80,15 +80,10 @@
             android:drawableStart="@drawable/ic_edit_password"
             android:textColor="?attr/textcolor"/>
         <TextView
+            android:id="@+id/notifications"
             style="@style/viewParent.headerText.settingsMiniTitle"
             android:text="Notifications"
-            android:textColor="?attr/textcolor"/>
-        <Switch
-            style="@style/settingsText"
-            android:checked="true"
             android:drawableLeft="@drawable/ic_notifications"
-            android:text="Notifications"
-            android:drawableStart="@drawable/ic_notifications"
             android:textColor="?attr/textcolor"/>
         <TextView
             style="@style/viewParent.headerText.settingsMiniTitle"
