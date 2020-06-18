@@ -22,5 +22,6 @@
         <attr name="calendarCardTitle" format="color" />
         <attr name="tabTextColor" format="color" />
         <attr name="tabTextHover" format="color" />
+        <attr name="drawerBackground" format="color" />
     </declare-styleable>
 </resources>

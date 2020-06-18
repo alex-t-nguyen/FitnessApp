@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Light Mode theme -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">#f6f6f6</item>
         <item name="colorPrimaryDark">@color/dark_blue</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="backgroundcolor">#fcfcfc</item>
@@ -16,14 +16,15 @@
         <item name="tintcolor">#000000</item>
         <item name="buttoncolor">#2196F3</item>
         <item name="restcolor">#dcdcdc</item>
-        <item name="workoutGroup">@color/workoutCard</item>
+        <item name="workoutGroup">#f6f6f6</item>
         <item name="workoutItem">#ffffff</item>
-        <item name="workoutGroupTextColor">@color/workoutCard</item>
-        <item name="workoutItemTextColor">#B44956</item>
+        <item name="workoutGroupTextColor">#258bd6</item>
+        <item name="workoutItemTextColor">#808080</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="bottomSheetBackground">@color/white</item>
         <item name="calendarCardTitle">#258bd6</item>
         <item name="fabButonColor">#FF4081</item>
+        <item name="drawerBackground">#cccccc</item>
     </style>
 
     <!-- Dark Mode theme -->
@@ -49,6 +50,7 @@
         <item name="bottomSheetBackground">@color/black</item>
         <item name="calendarCardTitle">#258bd6</item>
         <item name="fabButonColor">#03DAC6</item>
+        <item name="drawerBackground">#282828</item>
     </style>
 
     <!-- Light theme for exercises activity -->
@@ -59,7 +61,7 @@
         <item name="backgroundcolor">#ffffff</item>
         <item name="android:textColorHint">@color/login_form_details</item>
         <item name="cardBackground">#ffffff</item>
-        <item name="bottomsheetCardBackground">@color/colorPrimary</item>
+        <item name="bottomsheetCardBackground">#f6f6f6</item>
         <item name="textcolor">#808080</item>
         <item name="textcolorhint">#808080</item>
         <item name="tintcolor">#808080</item>
@@ -67,6 +69,7 @@
         <item name="restcolor">#d3d3d3</item>
         <item name="restcolorText">#808080</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back_black</item>
     </style>
 
     <!-- Dark theme for exercises activity -->
@@ -77,7 +80,7 @@
         <item name="backgroundcolor">#424242</item>
         <item name="android:textColorHint">@color/login_form_details</item>
         <item name="cardBackground">#707070</item>
-        <item name="bottomsheetCardBackground">#212121</item>
+        <item name="bottomsheetCardBackground">#282828</item>
         <item name="textcolor">#f8f8f8</item>
         <item name="textcolorhint">#808080</item>
         <item name="tintcolor">#dcdcdc</item>
@@ -85,6 +88,7 @@
         <item name="restcolor">#a0a0a0</item>
         <item name="restcolorText">#e8e8e8</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back_black</item>
     </style>
 
 
@@ -113,8 +117,7 @@
         <item name="fabButonColor">#FF4081</item>
         <item name="tabTextColor">#33C4B3</item>
         <item name="tabTextHover">#F68E4F</item>
-        <item name="colorControlNormal">#000000</item>
-        <item name="toolbarStyle">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back_black</item>
     </style>
 
     <!-- Dark Mode theme for Edit Profile -->
@@ -142,8 +145,7 @@
         <item name="fabButonColor">#03DAC6</item>
         <item name="tabTextColor">#dcdcdc</item>
         <item name="tabTextHover">#F4A950</item>
-        <item name="toolbarStyle">@style/ThemeOverlay.AppCompat</item>
-        <item name="colorControlNormal">#ffffff</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back_black</item>
     </style>
 
 
@@ -173,7 +175,7 @@
     </style>
 
     <style name="viewParent.headerText.settingsTextIcon" parent="settingsText">
-        <item name="android:drawableRight">@drawable/ic_more2</item>
+        <item name="android:drawableRight">@drawable/ic_more</item>
     </style>
 
     <style name="viewParent.headerText.settingsTextLogoutIcon" parent="settingsText">

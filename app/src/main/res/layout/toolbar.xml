@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/bottomsheetCardBackground"
-    android:paddingTop="10dp"
-    style="@style/lightThemeProfile">
+    android:paddingTop="0dp"
+    android:paddingBottom="12dp">
 
 </androidx.appcompat.widget.Toolbar>

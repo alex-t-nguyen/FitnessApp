@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:textColor="#F9F6F4"
+        android:textColor="?attr/workoutGroupTextColor"
         android:textSize="18sp"
         android:gravity="center_vertical"/>
 </LinearLayout>

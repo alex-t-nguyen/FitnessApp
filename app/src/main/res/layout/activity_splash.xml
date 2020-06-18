@@ -5,36 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Introduction.splash"
-    android:background="#1B1414">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    android:background="#000000">
 
         <ImageView
             android:id="@+id/iv"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="100dp"
-            android:src="@drawable/logo">
-
-        </ImageView>
-
-        <TextView
-            android:id="@+id/tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="60dp"
-            android:text="The Fitness App"
-            android:textColor="@color/white"
-            android:textSize="23dp"
-            android:textStyle="bold">
+            android:layout_centerInParent="true"
+            android:src="@drawable/title_img">
+        </ImageView>
 
-        </TextView>
+        <!--
+        <TextView
+            android:id="@+id/repeatText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Repeat"
+            android:layout_marginTop="50dp"
+            android:textColor="#ffffff"
+            android:textStyle="italic"
+            android:textSize="30dp"
+            android:layout_gravity="center" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/eatText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eat"
+            android:textStyle="italic"
+            android:textSize="30dp"
+            android:textColor="#ffffff"
+            android:layout_gravity="center" />
 
+        <TextView
+            android:id="@+id/sleepText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sleep"
+            android:textStyle="italic"
+            android:textSize="30dp"
+            android:textColor="#ffffff"
+            android:layout_gravity="center" />
 
+        <TextView
+            android:id="@+id/trainText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Train"
+            android:textStyle="italic"
+            android:textSize="30dp"
+            android:textColor="#ffffff"
+            android:layout_gravity="center" />
+    -->
 </RelativeLayout>

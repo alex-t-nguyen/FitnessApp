@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp"
         android:background="?attr/bottomsheetCardBackground">
         <include
             android:id="@+id/toolbar"
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         app:tabGravity="fill"
         app:tabMode="fixed"
+        app:elevation="0dp"
         app:tabTextColor="?attr/tabTextColor"
         app:tabIndicatorColor="?attr/tabTextHover"
         app:tabSelectedTextColor="?attr/tabTextHover"

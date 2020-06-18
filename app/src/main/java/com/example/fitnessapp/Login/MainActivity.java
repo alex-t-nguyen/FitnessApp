@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private CallbackManager mCallbackManager;
-    private static final String TAG = "FacebookAuthentication";
+    private static final String TAG = "MainActivity: Login";
 
     private FirebaseDatabase database;
     private DatabaseReference myRef;
@@ -103,12 +105,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        /*
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null)
                 {
+                    Log.d(TAG, "onCreate: onAuthStateChanged");
                     updateUI(user);
                 }
                 else
@@ -118,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         };
+
+         */
 
         AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
             @Override
@@ -184,7 +190,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         Intent homeIntent;
         if(user != null) {
-            // Toast.makeText(MainActivity.this, "User logged In", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "User logged In", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "updateUI: User logged in");
             progressBar.setVisibility(View.GONE);
             homeIntent = new Intent(MainActivity.this, Home.class);
             startActivity(homeIntent);
@@ -204,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updateUI(currentUser);
         //mAuth.addAuthStateListener(authStateListener);
     }
+
 
 
     @Override
@@ -268,7 +276,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else
                 {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
@@ -277,15 +284,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View view)
     {
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         switch(view.getId())
         {
             case R.id.btn_login:
             {
+                imm.hideSoftInputFromWindow(button_login.getWindowToken(), 0);
                 userLogin();
                 break;
             }
             case R.id.sign_up:
             {
+                imm.hideSoftInputFromWindow(signUp.getWindowToken(), 0);
                 Intent signUpSuccess = new Intent(MainActivity.this, signUp.class);
                 startActivity(signUpSuccess);
                 finish();
@@ -293,6 +303,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             case R.id.forgot_password:
             {
+                imm.hideSoftInputFromWindow(forgotpassbtn.getWindowToken(), 0);
+
                 Log.d(TAG, "Clicked forgot password");
                 popupForgotPass = new Dialog(this);
                 popupForgotPass.setContentView(R.layout.forgot_password_popup);

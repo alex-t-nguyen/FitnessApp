@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,6 +77,17 @@ public class workoutTemplate extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (darkModePrefManager.loadDarkModeState())
+        {
+            toolbar.setTitleTextColor(Color.WHITE);
+            toolbar.getOverflowIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        }
+        else {
+            toolbar.setTitleTextColor(Color.BLACK);
+            toolbar.getOverflowIcon().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
+        }
+
 
         inipopupaddExercise();
         inipopupaddRest();
@@ -296,8 +309,17 @@ public class workoutTemplate extends AppCompatActivity {
                 popupReps.setText(null);
                 popupWeight.setText(null);
 
-                popupTitle.setFocusableInTouchMode(true);
-                popupTitle.setFocusable(true);
+                popupTitle.requestFocus();
+            }
+        });
+
+        popAddExercise.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                popupTitle.setText(null);
+                popupReps.setText(null);
+                popupWeight.setText(null);
+
                 popupTitle.requestFocus();
             }
         });
@@ -354,6 +376,15 @@ public class workoutTemplate extends AppCompatActivity {
                 popupTime.setText(null);
             }
         });
+
+        popAddRest.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                popupTime.setText(null);
+                popupTime.requestFocus();
+            }
+        });
+
     }
 
 

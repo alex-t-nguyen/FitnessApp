@@ -90,6 +90,15 @@ public class workouts extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        if (darkModePrefManager.loadDarkModeState())
+        {
+            mToggle.getDrawerArrowDrawable().setColor(Color.WHITE);
+        }
+        else
+            mToggle.getDrawerArrowDrawable().setColor(Color.BLACK);
+
 
         final NavigationView navigationView = (NavigationView)findViewById(R.id.navigationView);
 

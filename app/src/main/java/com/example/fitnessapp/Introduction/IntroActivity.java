@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IntroActivity extends AppCompatActivity {
+
+    private static final String TAG = "introActivity";
 
     private ViewPager screenPager;
     IntroViewPagerAdapter introViewPagerAdapter ;
@@ -52,6 +55,7 @@ public class IntroActivity extends AppCompatActivity {
         }
         intent.putExtra("Helper",false);
          if (restorePrefData()&&!fromHelper) {
+             Log.d(TAG, "IntroActivity: intent");
             Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class );
             startActivity(mainActivity);
             finish();

@@ -71,7 +71,7 @@ public class stopwatchFragment extends Fragment{
         ListElementsArrayList = new ArrayList<String>(Arrays.asList(ListElements));
 
         adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1,
+                R.layout.stopwatch_list_item,
                 ListElementsArrayList
         );
 
