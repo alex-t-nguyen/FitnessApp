@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -55,8 +56,14 @@ public class calendarBottomSheet extends BottomSheetDialogFragment implements ca
         final EditText dialogDesc = (EditText) mDialog.findViewById(R.id.dialogDescription);
         Button dialogSubmit = (Button) mDialog.findViewById(R.id.submitDialog);
 
+        //dialogTitle.requestFocus();
+
         dialogTitle.setText(calItem.getTitle());
         dialogDesc.setText(calItem.getDescription());
+
+        dialogTitle.setSelection(dialogTitle.getText().length() - 1);
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
         dialogSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +94,7 @@ public class calendarBottomSheet extends BottomSheetDialogFragment implements ca
                 myRef = database.getReference("Calendar").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(dayOfWeek);
 
                 dialogTitle.requestFocus();
+
             }
         });
         mDialog.show();
@@ -197,6 +205,8 @@ public class calendarBottomSheet extends BottomSheetDialogFragment implements ca
                 Button dialogSubmit = (Button) mDialog.findViewById(R.id.submitDialog);
 
                 dialogTitle.requestFocus();
+                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
                 dialogSubmit.setText("Add Note");
                 dialogSubmit.setOnClickListener(new View.OnClickListener() {
