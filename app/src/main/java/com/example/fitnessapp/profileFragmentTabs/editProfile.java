@@ -1,6 +1,5 @@
 package com.example.fitnessapp.profileFragmentTabs;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -9,19 +8,16 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.fitnessapp.MainActivity;
 import com.example.fitnessapp.R;
-import com.example.fitnessapp.logoutAuthenticate;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.example.fitnessapp.profileFragmentTabs.DeleteAccount.deleteAuthenticate;
+import com.example.fitnessapp.profileFragmentTabs.editEmail.change_email_authenticate;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -32,15 +28,28 @@ public class editProfile extends AppCompatActivity implements View.OnClickListen
     private Toolbar toolbar;
     private Dialog mDialog;
     private ProgressBar progressBar;
+
+    private DarkModePrefManager darkModePrefManager;
     Button deleteAccountbtn, cancelbtn;
 
     // Firebase variables
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        darkModePrefManager = new DarkModePrefManager(this);
+        if (darkModePrefManager.loadDarkModeState())
+        {
+            setTheme(R.style.darkthemeProfile);
+        }
+        else {
+            setTheme(R.style.lightThemeProfile);
+        }
+
         // Set layout
         setContentView(R.layout.edit_profile_menu);
 
@@ -69,6 +78,8 @@ public class editProfile extends AppCompatActivity implements View.OnClickListen
         {
             case R.id.edit_email_btn:
             {
+                Intent editEmailActivity = new Intent(v.getContext(), change_email_authenticate.class);
+                startActivity(editEmailActivity);
                 break;
             }
             case R.id.delete_account_btn:
@@ -81,38 +92,14 @@ public class editProfile extends AppCompatActivity implements View.OnClickListen
                 deleteAccountbtn = mDialog.findViewById(R.id.delete_confirmation_btn);
                 cancelbtn = mDialog.findViewById(R.id.cancel_delete_btn);
 
-                // Define progressbar
-                progressBar = mDialog.findViewById(R.id.delete_acc_progressbar);
-
                 deleteAccountbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        progressBar.setVisibility(View.VISIBLE);
-                        firebaseAuth = FirebaseAuth.getInstance();
-                        firebaseUser = firebaseAuth.getCurrentUser();
 
-                        firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                progressBar.setVisibility(View.GONE);
-                                if (task.isSuccessful())
-                                {
-                                    Toast.makeText(v.getContext(), "Account Deleted", Toast.LENGTH_LONG).show();
-                                    Intent returnlogin = new Intent(v.getContext(), MainActivity.class);
-                                    returnlogin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    returnlogin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(returnlogin);
+                        Intent reAuthenticate = new Intent(v.getContext(), deleteAuthenticate.class);
+                        startActivity(reAuthenticate);
+                        //Toast.makeText(v.getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
 
-                                }
-                                else    // If user hasn't recently logged in and needs to be re-authenticated
-                                {
-                                    Log.d(TAG, "failed to delete");
-                                    Intent reAuthenticate = new Intent(v.getContext(), logoutAuthenticate.class);
-                                    startActivity(reAuthenticate);
-                                    //Toast.makeText(v.getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
                         mDialog.dismiss();
                     }
                 });
@@ -138,4 +125,6 @@ public class editProfile extends AppCompatActivity implements View.OnClickListen
 
         return true;
     }
+
+
 }

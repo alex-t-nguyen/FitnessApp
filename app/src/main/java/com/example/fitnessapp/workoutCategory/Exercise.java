@@ -2,20 +2,20 @@ package com.example.fitnessapp.workoutCategory;
 
 public class Exercise {
     private String name;
-    private String sets;
     private String reps;
+    private String weight;
     private String rest;
 
     public Exercise() {
         this.name = "";
-        this.sets = "";
         this.reps = "";
+        this.weight = "";
         this.rest = "";
     }
-    public Exercise(String name, String sets, String reps, String rest) {
+    public Exercise(String name, String reps, String weight, String rest) {
         this.name = name;
-        this.sets = sets;
         this.reps = reps;
+        this.weight = weight;
         this.rest = rest;
     }
 
@@ -27,12 +27,12 @@ public class Exercise {
         this.name = name;
     }
 
-    public String getSets() {
-        return sets;
+    public String getWeight() {
+        return weight;
     }
 
-    public void setSets(String sets) {
-        this.sets = sets;
+    public void setWeight(String sets) {
+        this.weight = sets;
     }
 
     public String getReps() {

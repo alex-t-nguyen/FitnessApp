@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IntroActivity"
-    android:background="#ffffff"
-    >
+    tools:context=".Introduction.IntroActivity"
+    android:background="#1B1414" >
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/screen_viewpager"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="#1B1414"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/tab_indicator"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +47,8 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_next"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:tabBackground="@color/colorPrimaryDark">
+        app:tabBackground="@drawable/indicator_selector"
+        app:tabIndicatorColor="#1B1414">
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -71,7 +72,7 @@
     <TextView
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="#2d2d2d"
+        android:textColor="@color/gradient_start_color"
         android:id="@+id/tv_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

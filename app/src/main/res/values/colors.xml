@@ -17,7 +17,7 @@
     // Home
     <color name="colorHeaderLight">#03A9F4</color>
     <color name="colorHeaderDark">#081A25</color>
-    <color name="colorAccent2">#FF4081</color>
+    <color name="colorAccent2">#03DAC6</color>
     <color name="colorTableText">#ffffff</color>
     <color name="colorTableTextHover">#e8b923</color>
     <color name="colorTabs">#012643</color>

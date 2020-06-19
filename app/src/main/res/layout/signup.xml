@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_login"
-    tools:context=".signUp">
+    tools:context=".Login.signUp">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_left"
@@ -40,10 +40,12 @@
         android:background="@drawable/edit_text_bg"
         android:hint="Email address"
         android:textColorHint="@color/login_form_details"
+        android:textColor="@color/white"
         android:padding="16dp"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:nextFocusDown="@id/password"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password"
@@ -66,8 +68,11 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_bg"
             android:hint="Password"
+            android:textColorHint="@color/login_form_details"
+            android:textColor="@color/white"
             android:padding="16dp"
             android:inputType="textPassword"
+            android:nextFocusDown="@id/btn_signup"
 
             app:layout_constraintEnd_toStartOf="@id/guideline_right"
             app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -80,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Sign Up"
-        android:textColor="@color/login_form_details_medium"
+        android:textColor="@color/login_form_details"
         android:textAllCaps="false"
         android:background="@drawable/button_bg"
         app:layout_constraintStart_toEndOf="@id/guideline_left"
@@ -89,7 +94,7 @@
 
     <com.facebook.login.widget.LoginButton
         xmlns:facebook="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/facebook_login"
+        android:id="@+id/facebook_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -128,7 +133,7 @@
         android:background="@color/login_form_details"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
         app:layout_constraintTop_toBottomOf="@id/btn_signup"
-        app:layout_constraintBottom_toTopOf="@id/facebook_login"
+        app:layout_constraintBottom_toTopOf="@id/facebook_signup"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintEnd_toStartOf="@+id/or"/>
 
@@ -155,7 +160,7 @@
         app:layout_constraintTop_toTopOf="@id/or"/>
 
     <ProgressBar
-        android:id="@+id/progressbar"
+        android:id="@+id/progressbar_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"

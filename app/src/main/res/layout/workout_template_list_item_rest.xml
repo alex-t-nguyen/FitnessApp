@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:background="#dcdcdc">
+    android:background="?attr/restcolor">
 
     <TextView
         android:id="@+id/rest_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="REST"
-        android:textColor="#808080"
+        android:textColor="?attr/restcolorText"
         android:layout_centerVertical="true"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:00"
-        android:textColor="#808080"
+        android:textColor="?attr/restcolorText"
         android:textSize="15sp"
         android:layout_alignStart="@+id/rest_title"
         android:layout_centerVertical="true"

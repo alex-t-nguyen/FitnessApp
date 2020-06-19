@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:id="@+id/list_item_layout">
+    android:id="@+id/list_item_layout"
+    android:background="?attr/cardBackground">
 
     <CheckBox
         android:id="@+id/checkb"
@@ -14,7 +15,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp" />
+        android:layout_marginStart="20dp"/>
 
     <TextView
         android:id="@+id/exercise_name"
@@ -23,16 +24,18 @@
         android:text="Exercise 1"
         android:paddingTop="10dp"
         android:textSize="20sp"
+        android:textColor="?attr/textcolor"
         android:layout_marginLeft="75dp"
         android:layout_marginStart="75dp" />
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sets x Reps"
+        android:text="Reps x Weight"
         android:textSize="15sp"
         android:layout_below="@+id/exercise_name"
         android:layout_marginLeft="75dp"
         android:layout_marginStart="75dp"
-        android:paddingBottom="8dp"/>
+        android:paddingBottom="8dp"
+        android:textColor="?attr/textcolor"/>
 </RelativeLayout>

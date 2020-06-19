@@ -6,21 +6,24 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".workouts">
+    android:background="?attr/backgroundcolor"
+    tools:context=".workoutCategory.workouts">
 
     <ExpandableListView
         android:id="@+id/expandable_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="?attr/backgroundcolor"/>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         app:headerLayout="@layout/drawer_header"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:itemTextColor="@color/navigation_drawer_bg"
-        app:itemIconTint="@color/navigation_drawer_bg"
+        app:itemTextColor="?attr/textcolor"
+        app:itemIconTint="?attr/textcolor"
         app:menu="@menu/drawer_menu"
+        android:background="?attr/backgroundcolor"
         android:layout_gravity ="start">
     </com.google.android.material.navigation.NavigationView>
 
