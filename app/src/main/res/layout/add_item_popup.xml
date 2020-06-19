@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/textUnderlinePopUp"
-            android:textColor="@color/login_form_details">
+            android:textColor="@color/white">
         </Spinner>
 
         <com.google.android.material.textfield.TextInputLayout

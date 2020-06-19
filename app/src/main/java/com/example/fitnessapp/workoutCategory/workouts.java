@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -113,6 +114,7 @@ public class workouts extends AppCompatActivity {
 
         // Firebase Database
         database = FirebaseDatabase.getInstance();
+
         myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid());  // Gets current user ID to add to their specific workout lists
 
         // initializeData();
@@ -258,6 +260,7 @@ public class workouts extends AppCompatActivity {
                                             exerciseIntent.putExtra("selectedWorkoutKey", key);
                                             exerciseIntent.putExtra("selectedWorkoutGroup", group);
                                             startActivity(exerciseIntent);
+                                            finish();
                                                 //childReference.removeEventListener(this);
                                             return true;
                                         }
@@ -494,6 +497,12 @@ public class workouts extends AppCompatActivity {
                     categoryTitle.requestFocus();
                     validTitle = false;
                 }
+                if(listHeader.contains(headerTitle))
+                {
+                    categoryTitle.setError("Title name already exists");
+                    categoryTitle.requestFocus();
+                    validTitle = false;
+                }
                 else
                 {
                     categoryTitle.setError(null);
@@ -501,7 +510,7 @@ public class workouts extends AppCompatActivity {
                 }
                 if(validTitle) {
                     listHeader.add(headerTitle);    // Add header title to list of headers
-                    newExpandableCategory = new ArrayList<>(); // Create new expandable list w/ 0 items
+                    //newExpandableCategory = new ArrayList<>(); // Create new expandable list w/ 0 items
                     //listHashMap.put(listHeader.get(listHeader.size() - 1), newExpandableCategory);
                     myDialog.dismiss();
                     //listAdapter.notifyDataSetChanged();
@@ -581,6 +590,12 @@ public class workouts extends AppCompatActivity {
                     itemTitle.requestFocus();
                     validTitle = false;
                 }
+                if(listHashMap.get(chosenCategory).contains(headerTitle))
+                {
+                    itemTitle.setError("Title name already exists");
+                    itemTitle.requestFocus();
+                    validTitle = false;
+                }
                 else
                 {
                     itemTitle.setError(null);
@@ -591,7 +606,7 @@ public class workouts extends AppCompatActivity {
                     setSpinnerError(spinner,"Field cannot be empty");
                 }
                 else if(validTitle) {
-                    newExpandableCategory = new ArrayList<>();
+                    //newExpandableCategory = new ArrayList<>();
                     database = FirebaseDatabase.getInstance();
 
                     myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(chosenCategory);  // Gets current user ID's chosen category to add to their specific workout lists
@@ -680,6 +695,30 @@ public class workouts extends AppCompatActivity {
 
                     myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(chosenCategory);  // Gets current user ID's chosen category to add to their specific workout lists
                     myRef.removeValue();   // Remove category from database
+
+                    myRef = database.getReference("Workouts");
+                    myRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            boolean userFound = false;
+                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                            {
+                                if (dataSnapshot1.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                                {
+                                    userFound = true;
+                                    break;
+                                }
+                            }
+                            if (!userFound)
+                                myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                     myDialog.dismiss();
                 }
             }
@@ -758,7 +797,7 @@ public class workouts extends AppCompatActivity {
                 } else if (!itemSelected) {
                     setSpinnerError(spinnerItems, "Field cannot be empty");
                 } else {
-                    newExpandableCategory = new ArrayList<>();
+                    //newExpandableCategory = new ArrayList<>();
                     database = FirebaseDatabase.getInstance();
 
                     myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(chosenCategory);  // Gets current user ID's chosen category to add to their specific workout lists
@@ -781,18 +820,42 @@ public class workouts extends AppCompatActivity {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                                 String item = snapshot.getKey();
-                                newExpandableCategory.add(item);
+                                //newExpandableCategory.add(item);
                                 if (item.equals(chosenItem)) {
                                     myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(chosenCategory).child(snapshot.getKey());
                                     Log.d(TAG, snapshot.getKey());
                                     myRef.removeValue();   // Remove item from database
-                                    newExpandableCategory.remove(item);
+                                    myRef = database.getReference("Workouts");
+                                    myRef.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            boolean userFound = false;
+                                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                                            {
+                                                if (dataSnapshot1.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                                                {
+                                                    userFound = true;
+                                                    break;
+                                                }
+                                            }
+                                            if (!userFound)
+                                                myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                    //newExpandableCategory.remove(item);
                                     chosenItem = "";
                                     //Log.d(TAG, "Header Size: " + listHeader.size());
                                     //Log.d(TAG, "HashMap Size: " + listHashMap.size());
                                     //listAdapter.notifyDataSetChanged();
+                                    break;
                                 }
                             }
+                            myRef.removeEventListener(this);
                         }
 
                         @Override
@@ -864,12 +927,13 @@ public class workouts extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listHashMap.clear();
                 listHeader.clear();
+                //listAdapter.notifyDataSetChanged();
                 Log.d(TAG, "Group change called");
 
                 for (final DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
                     final DatabaseReference childReference = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey());
-                    childReference.addValueEventListener(new ValueEventListener() {
+                    childReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             final ArrayList<String> items = new ArrayList<>();
@@ -877,13 +941,15 @@ public class workouts extends AppCompatActivity {
                             {
                                 items.add(snapshot1.getKey());
                             }
-                            Log.d(TAG, "Header Size: " + listHeader.size());
-
                             listHeader.add(snapshot.getKey());
-                            listHashMap.put(listHeader.get(listHeader.size() - 1), items);
-                            //listAdapter = new expandableListAdapter(getApplicationContext(), listHeader, listHashMap);
-                            //listView.setAdapter(listAdapter);
-                            listAdapter.notifyDataSetChanged();
+                            if(!listHashMap.containsKey(listHeader.get(listHeader.size() - 1))) {
+                                listHashMap.put(listHeader.get(listHeader.size() - 1), items);
+                                //listAdapter = new expandableListAdapter(getApplicationContext(), listHeader, listHashMap);
+                                //listView.setAdapter(listAdapter);
+
+                                listAdapter.notifyDataSetChanged();
+                                Log.d(TAG, "Hash Map: " + listHashMap);
+                            }
                             childReference.removeEventListener(this);
                         }
 
@@ -893,6 +959,7 @@ public class workouts extends AppCompatActivity {
                         }
                     });
                 }
+                listAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -901,5 +968,4 @@ public class workouts extends AppCompatActivity {
             }
         });
     }
-
 }

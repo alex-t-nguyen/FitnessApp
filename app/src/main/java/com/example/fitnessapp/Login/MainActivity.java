@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signUp = (TextView)findViewById(R.id.sign_up);
         forgotpassbtn = (TextView)findViewById(R.id.forgot_password);
 
+        Log.d(TAG, "onCreate");
         button_login.setOnClickListener(this);
         signUp.setOnClickListener(this);
         forgotpassbtn.setOnClickListener(this);
@@ -188,10 +189,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void updateUI(FirebaseUser user)
     {
+        Log.d(TAG, "updateUI runnning");
         Intent homeIntent;
         if(user != null) {
-            Toast.makeText(MainActivity.this, "User logged In", Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "updateUI: User logged in");
+            //Toast.makeText(MainActivity.this, "User logged In", Toast.LENGTH_SHORT).show();
+            //Log.d(TAG, "updateUI: User logged in");
             progressBar.setVisibility(View.GONE);
             homeIntent = new Intent(MainActivity.this, Home.class);
             startActivity(homeIntent);
@@ -264,14 +266,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     progressBar.setVisibility(View.GONE);
 
-                    Intent homeActivity = new Intent(getApplicationContext(), Home.class);
+                    //Intent homeActivity = new Intent(getApplicationContext(), Home.class);
                     getIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);   // Clear all tasks on top of task (prevent hitting back button to go back to login)
                     User user = new User(email);
                     database = FirebaseDatabase.getInstance();
                     myRef = database.getReference("Users"); // Get reference in database (Users path)
                     myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);   // Assign user id in User path, then user's email to the ID
 
-                    startActivity(homeActivity);
+                    updateUI(FirebaseAuth.getInstance().getCurrentUser());
+
+                    //Toast.makeText(MainActivity.this, "User logged in", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "signInWithEmailAndPassword: User logged in");
+                    //startActivity(homeActivity);
+                    finish();
                 }
                 else
                 {

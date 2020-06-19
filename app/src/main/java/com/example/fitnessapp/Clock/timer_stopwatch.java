@@ -56,7 +56,8 @@ public class timer_stopwatch extends AppCompatActivity {
         {
             case android.R.id.home:
             {
-                onBackPressed();
+                finish();
+                //onBackPressed();
                 return true;
             }
         }

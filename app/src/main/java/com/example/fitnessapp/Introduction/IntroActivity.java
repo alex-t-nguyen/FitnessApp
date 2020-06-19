@@ -45,12 +45,12 @@ public class IntroActivity extends AppCompatActivity {
         // make the activity on full screen
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Intent intent= getIntent();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Intent intent = getIntent();
 
         if(intent.getBooleanExtra("Helper",false))
         {
+            //Log.d(TAG, "IntroActivity: getBooleanExtra");
             fromHelper = true;
         }
         intent.putExtra("Helper",false);
@@ -156,11 +156,10 @@ public class IntroActivity extends AppCompatActivity {
         btnGetStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 //open main activity
                 if(!fromHelper) {
                     Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                    Log.d(TAG, "getStarted: onClick");
                     startActivity(mainActivity);
                     // also we need to save a boolean value to storage so next time when the user run the app
                     // we could know that he is already checked the intro screen activity

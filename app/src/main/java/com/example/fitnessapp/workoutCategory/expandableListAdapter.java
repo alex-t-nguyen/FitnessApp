@@ -2,6 +2,7 @@ package com.example.fitnessapp.workoutCategory;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class expandableListAdapter extends BaseExpandableListAdapter {
 
+    private static final String TAG = "expandableListAdapter";
     private Context context;
     private List<String> listDataHeader;
     private HashMap<String, List<String>> listHashMap;
@@ -67,8 +69,9 @@ public class expandableListAdapter extends BaseExpandableListAdapter {
         String headerTitle = (String)getGroup(groupPosition);
         if(convertView == null)
         {
+            Log.d(TAG, "getGroupView");
             LayoutInflater inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_group, null);
+            convertView = inflater.inflate(R.layout.list_group, parent, false);
         }
         TextView listHeader = (TextView)convertView.findViewById(R.id.list_header);
         listHeader.setTypeface(null, Typeface.BOLD);
@@ -81,8 +84,9 @@ public class expandableListAdapter extends BaseExpandableListAdapter {
         final String childText = (String)getChild(groupPosition, childPosition);
         if(convertView == null)
         {
+            Log.d(TAG, "getChildView");
             LayoutInflater inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_item, null);
+            convertView = inflater.inflate(R.layout.list_item, parent, false);
         }
         TextView textListChild = (TextView)convertView.findViewById(R.id.list_item);
         textListChild.setText(childText);
@@ -93,4 +97,6 @@ public class expandableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+
 }

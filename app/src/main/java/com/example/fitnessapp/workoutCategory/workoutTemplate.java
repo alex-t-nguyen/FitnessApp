@@ -331,6 +331,14 @@ public class workoutTemplate extends AppCompatActivity {
         adapter.notifyItemInserted(mExercises.size() - 1);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent returnWorkouts = new Intent(this, workouts.class);
+        startActivity(returnWorkouts);
+        finish();
+    }
+
     private void inipopupaddRest() {
 
         final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

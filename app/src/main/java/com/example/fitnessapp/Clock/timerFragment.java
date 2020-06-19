@@ -60,7 +60,7 @@ public class timerFragment extends Fragment {
         editTextInput = view.findViewById(R.id.edit_text_input);
 
         unitSelector = view.findViewById(R.id.spinner_selectUnit);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.timer_units, R.layout.color_spinner_layout);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.timer_units, R.layout.timer_spinner_layout);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         unitSelector.setAdapter(adapter);
 
