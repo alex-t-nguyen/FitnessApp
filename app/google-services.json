@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:604287089333:android:827271d87dc5b04c8c9cfc",
         "android_client_info": {
-          "package_name": "com.example.fitnessapp"
+          "package_name": "com.rest.fitnessapp"
         }
       },
       "oauth_client": [

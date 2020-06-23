@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.fitnessapp">
+    package="com.rest.fitnessapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -8,8 +8,9 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:icon="@drawable/app_icon"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".splash"
+        <activity android:name="com.rest.fitnessapp.splash"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -17,14 +18,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".profileFragmentTabs.changePassword.change_password"></activity>
-        <activity android:name=".profileFragmentTabs.changePassword.change_pass_authenticate" />
-        <activity android:name=".profileFragmentTabs.editEmail.changeEmail" />
-        <activity android:name=".profileFragmentTabs.editEmail.change_email_authenticate" />
+        <activity android:name="com.rest.fitnessapp.profileFragmentTabs.changePassword.change_password"></activity>
+        <activity android:name="com.rest.fitnessapp.profileFragmentTabs.changePassword.change_pass_authenticate" />
+        <activity android:name="com.rest.fitnessapp.profileFragmentTabs.editEmail.changeEmail" />
+        <activity android:name="com.rest.fitnessapp.profileFragmentTabs.editEmail.change_email_authenticate" />
 
 
         <!-- Logout Authentication activity-->
-        <activity android:name=".profileFragmentTabs.DeleteAccount.deleteAuthenticate">
+        <activity android:name="com.rest.fitnessapp.profileFragmentTabs.DeleteAccount.deleteAuthenticate">
             <intent-filter>
                 <action android:name=".workoutTemplate" />
 
@@ -34,8 +35,8 @@
 
         <!-- Workout template activity (Exercises)-->
         <activity
-            android:name=".workoutCategory.workoutTemplate"
-            android:parentActivityName=".workoutCategory.workouts"
+            android:name="com.rest.fitnessapp.workoutCategory.workoutTemplate"
+            android:parentActivityName="com.rest.fitnessapp.workoutCategory.workouts"
             android:theme="@style/Toolbar">
             <intent-filter>
                 <action android:name=".workoutTemplate" />
@@ -46,7 +47,7 @@
 
         <!-- Profile Fragment edit menu -->
         <activity
-            android:name=".profileFragmentTabs.editProfile"
+            android:name="com.rest.fitnessapp.profileFragmentTabs.editProfile"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name=".profileFragmentTabs.editProfile" />
@@ -55,7 +56,7 @@
             </intent-filter>
         </activity> <!-- Timer/Stopwatch Activity -->
         <activity
-            android:name=".Clock.timer_stopwatch"
+            android:name="com.rest.fitnessapp.Clock.timer_stopwatch"
             android:label="@string/title_activity_timer_stopwatch"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan">
@@ -66,7 +67,7 @@
             </intent-filter>
         </activity> <!-- On-boarding Screen -->
         <activity
-            android:name=".Introduction.IntroActivity"
+            android:name="com.rest.fitnessapp.Introduction.IntroActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
 
@@ -83,7 +84,7 @@
 
         <!-- Sign Up screen -->
         <activity
-            android:name=".Login.signUp"
+            android:name="com.rest.fitnessapp.Login.signUp"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name=".signUp" />
@@ -94,7 +95,7 @@
 
         <!-- Home Screen -->
         <activity
-            android:name=".homeFragments.Home"
+            android:name="com.rest.fitnessapp.homeFragments.Home"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name=".Home" />
@@ -105,8 +106,8 @@
 
         <!-- Workout Tab -->
         <activity
-            android:name=".workoutCategory.workouts"
-            android:parentActivityName=".homeFragments.Home"
+            android:name="com.rest.fitnessapp.workoutCategory.workouts"
+            android:parentActivityName="com.rest.fitnessapp.homeFragments.Home"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name=".workouts" />
@@ -114,7 +115,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity> <!-- Login Screen (MAIN ACTIVITY) -->
-        <activity android:name=".Login.MainActivity">
+        <activity android:name="com.rest.fitnessapp.Login.MainActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
