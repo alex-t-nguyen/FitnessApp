@@ -115,119 +115,6 @@ public class workouts extends AppCompatActivity {
 
         myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid());  // Gets current user ID to add to their specific workout lists
 
-        // initializeData();
-        /*
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listHashMap.clear();
-                listHeader.clear();
-                Log.d(TAG, "Group change called");
-
-                for (final DataSnapshot snapshot : dataSnapshot.getChildren())
-                {
-                    final DatabaseReference childReference = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(snapshot.getKey());
-                    childReference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            final ArrayList<String> items = new ArrayList<>();
-                            for (DataSnapshot snapshot1 : dataSnapshot.getChildren())
-                            {
-                                items.add(snapshot1.getKey());
-                            }
-                            Log.d(TAG, "Header Size: " + listHeader.size());
-
-                            listHeader.add(snapshot.getKey());
-                            listHashMap.put(listHeader.get(listHeader.size() - 1), items);
-                            //listAdapter = new expandableListAdapter(getApplicationContext(), listHeader, listHashMap);
-                            //listView.setAdapter(listAdapter);
-                            listAdapter.notifyDataSetChanged();
-                            childReference.removeEventListener(this);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-         */
-        // Get list of workouts data from database and load onto screen
-        /*
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //listHashMap.clear();
-                listHeader.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren())
-                {
-                    listHeader.add(snapshot.getValue().toString());
-                    Log.i(TAG, "Header adding: " + snapshot.getValue().toString());
-                    //listHashMap.put(snapshot.getKey(), newExpandableCategory);    *** Need to change database reference to the category instead of user ID and call addValueEventListener again
-                }                                                                   //  and go through each child (items of category) and add them to an ArrayList, then put the ArrayList into the hash map
-                listAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        */
-        /*
-        // Workouts expandable list
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listHashMap.clear();
-                listHeader.clear();
-
-                for(DataSnapshot snapshot : dataSnapshot.getChildren())
-                {
-                    try {
-                        final String parentKey = snapshot.getKey();  // contains "Push" category
-                        DatabaseReference childReference = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(parentKey);
-                        childReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                newExpandableCategory = new ArrayList<>();
-                                for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
-                                    String childValue = snapshot1.getKey();
-                                    newExpandableCategory.add(childValue);
-                                }
-                                // Creates item in list
-                                    Log.d(TAG, "size2: " + newExpandableCategory.size());
-                                    listHeader.add(parentKey);
-                                    listHashMap.put(listHeader.get(listHeader.size() - 1), newExpandableCategory);
-                                    listAdapter.notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                    catch(Exception e)
-                    {
-                        Log.i(TAG, "Exception: " + e.toString());
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        */
-
         keyHashMap = new HashMap<>();
         final Intent exerciseIntent = new Intent(getApplicationContext(), workoutTemplate.class);
 
@@ -263,12 +150,7 @@ public class workouts extends AppCompatActivity {
                                             return true;
                                         }
                                     });
-                                    //System.out.println(keyHashMap);
-                                    /*if (snapshot1.getKey() == null)
-                                        Log.i(TAG, "null");
-                                    else
-                                        Log.i(TAG, snapshot1.getKey());
-                                    */
+
                                 }
                             }
 
@@ -293,88 +175,6 @@ public class workouts extends AppCompatActivity {
 
         });
 
-
-        /*
-        // Workout items list
-        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            @Override
-            public boolean onChildClick(final ExpandableListView parent, View v, final int groupPosition, final int childPosition, long id) {
-                Toast.makeText(getApplicationContext(), "Clicked on " + listHashMap.get(listHeader.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
-
-                final Intent exerciseIntent = new Intent(getApplicationContext(), workoutTemplate.class);
-
-                myRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(final DataSnapshot snapshot : dataSnapshot.getChildren())
-                        {
-                            try {
-                                final String parentKey = snapshot.getKey();
-                                final DatabaseReference childReference = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(parentKey);
-
-                                childReference.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                        for (final DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
-                                            final String childValue = snapshot1.getValue().toString();
-
-                                            listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-                                                @Override
-                                                public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                                                    if(childValue.equals(listHashMap.get(listHeader.get(groupPosition)).get(childPosition))) {
-                                                        exerciseIntent.putExtra("selectedWorkout", snapshot1.getKey());
-                                                        startActivity(exerciseIntent);
-                                                        //childReference.removeEventListener(this);
-                                                    }
-                                                    return false;
-                                                }
-                                            });
-                                            if (snapshot1.getKey() == null)
-                                                Log.i(TAG, "null");
-                                            else
-                                                Log.i(TAG, snapshot1.getKey());
-
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
-                                childReference.removeEventListener(this);
-                            }
-                            catch(Exception e)
-                            {
-                                Log.i(TAG, "Exception2: " + e.toString());
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-
-                });
-                /*
-                exerciseIntent.putExtra("selectedWorkout", key);
-                startActivity(exerciseIntent);
-                //exerciseIntent.putExtra("key", "M8w9HMAJwBCvzGaEmVs");
-                if (key == null)
-                    Log.i(TAG, "null");
-                else
-                    Log.i(TAG, key);
-                startActivity(exerciseIntent);
-
-                //startActivity(exerciseIntent);
-
-                return true;
-            }
-        });
-        */
         // Drawer Menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -495,7 +295,7 @@ public class workouts extends AppCompatActivity {
                     categoryTitle.requestFocus();
                     validTitle = false;
                 }
-                if(listHeader.contains(headerTitle))
+                else if(listHeader.contains(headerTitle))
                 {
                     categoryTitle.setError("Title name already exists");
                     categoryTitle.requestFocus();
@@ -515,23 +315,6 @@ public class workouts extends AppCompatActivity {
                     database = FirebaseDatabase.getInstance();
                     myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(listHeader.get(listHeader.size() - 1));  // Gets current user ID to add to their specific workout lists
                     myRef.setValue(listHeader.get(listHeader.size() - 1));   // Add category to database
-                    /*
-                    myRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for(DataSnapshot snapshot : dataSnapshot.getChildren())
-                            {
-                                listHashMap.put(snapshot.getKey(), newExpandableCategory);
-                            }
-                            listAdapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                     */
                 }
             }
         });
@@ -578,34 +361,38 @@ public class workouts extends AppCompatActivity {
         btnAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                headerTitle = itemTitle.getText().toString();
-                if(headerTitle.isEmpty())
+                /*
+                    1) Check if item title is empty
+                    2) Check if category is selected (Produces null pointer when searching for "item title" in list if not selected)
+                        2a) If category is selected -> check if item title is in list
+                        2b) Else don't check if item title is in list
+                 */
+                if(itemTitle.getText().toString().isEmpty())
                 {
                     itemTitle.setError("Field cannot be empty");
                     itemTitle.requestFocus();
                     validTitle = false;
                 }
-                if(listHashMap.get(chosenCategory).contains(headerTitle))
-                {
-                    itemTitle.setError("Title name already exists");
-                    itemTitle.requestFocus();
-                    validTitle = false;
+                else {  // Item title will always have some text if this runs
+                    if (!categorySelected) {
+                        setSpinnerError(spinner, "Field cannot be empty");
+                        validTitle = false;
+                    } else if (listHashMap.get(chosenCategory).contains(itemTitle.getText().toString())) {
+                        itemTitle.setError("Title name already exists");
+                        itemTitle.requestFocus();
+                        validTitle = false;
+                    } else {
+                        itemTitle.setError(null);
+                        setSpinnerError(spinner, null);
+                        validTitle = true;
+                    }
                 }
-                else
-                {
-                    itemTitle.setError(null);
-                    validTitle = true;
-                }
-                if(!categorySelected)
-                {
-                    setSpinnerError(spinner,"Field cannot be empty");
-                }
-                else if(validTitle) {
+                if(validTitle) {
                     //newExpandableCategory = new ArrayList<>();
                     database = FirebaseDatabase.getInstance();
 
                     myRef = database.getReference("Workouts").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(chosenCategory);  // Gets current user ID's chosen category to add to their specific workout lists
-                    myRef.child(headerTitle).setValue(headerTitle);   // Add item to database
+                    myRef.child(itemTitle.getText().toString()).setValue(itemTitle.getText().toString());   // Add item to database
                     myDialog.dismiss();
 
                     //listHashMap.get(chosenCategory).add(headerTitle);
@@ -815,6 +602,7 @@ public class workouts extends AppCompatActivity {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             boolean userFound = false;
+                                            Log.d(TAG, "deleteItem: onDataChange: Re-add userID");
                                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
                                             {
                                                 if (dataSnapshot1.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
@@ -825,6 +613,32 @@ public class workouts extends AppCompatActivity {
                                             }
                                             if (!userFound)
                                                 myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                                            /*
+                                            DatabaseReference childReference = myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                                            childReference.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    boolean workoutCategoryFound = false;
+                                                    for (DataSnapshot workoutCategorySnapshot : snapshot.getChildren())
+                                                    {
+                                                        if (workoutCategorySnapshot.getKey().equals(chosenCategory))
+                                                        {
+                                                            workoutCategoryFound = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (!workoutCategoryFound)
+                                                        myRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(chosenCategory).setValue(chosenCategory);
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+                                            */
                                         }
 
                                         @Override
